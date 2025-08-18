@@ -1,29 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  AppBar, 
-  Toolbar, 
-  Box, 
-  Typography, 
-  Button, 
-  Avatar, 
-  Menu, 
-  MenuItem, 
-  Divider, 
-  ListItemIcon, 
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  Button,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+  ListItemIcon,
   ListItemText,
   Container,
   Paper
 } from '@mui/material';
-import { 
-  Language as LanguageIcon, 
-  Logout as LogoutIcon, 
-  Feedback as FeedbackIcon, 
-  History as HistoryIcon, 
-  Lock as LockIcon 
+import {
+  Language as LanguageIcon,
+  Logout as LogoutIcon,
+  Feedback as FeedbackIcon,
+  History as HistoryIcon,
+  Lock as LockIcon
 } from '@mui/icons-material';
 import { AikyuuLogo } from './aikyuu-logo';
-import { useUIStore } from '../../store';
+import { useUIStore } from '@/store/uiStore';
 
 interface NavbarProps {
   userCredits?: number;
@@ -62,14 +62,14 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
   return (
     <Box sx={{ width: '100%', backgroundColor: 'background.default', px: { xs: 1.5, md: 6 }, py: 6 }}>
-      <Paper sx={{ 
-        maxWidth: '1280px', 
-        mx: 'auto', 
-        borderRadius: '50px', 
-        px: { xs: 3, md: 6 }, 
-        py: 3, 
-        display: 'flex', 
-        alignItems: 'center', 
+      <Paper sx={{
+        maxWidth: '1280px',
+        mx: 'auto',
+        borderRadius: '50px',
+        px: { xs: 3, md: 6 },
+        py: 3,
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'space-between',
         boxShadow: 1
       }}>
@@ -82,39 +82,39 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 3, md: 6 } }}>
           {/* Navigation Links */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'flex-end', gap: 4 }}>
-            <Button 
+            <Button
               component={Link}
-              to="/use-cases" 
-              sx={{ 
-                color: 'text.primary', 
-                fontFamily: 'Montserrat', 
-                fontSize: { md: '1.125rem', lg: '1.5rem' }, 
-                fontWeight: 700, 
+              to="/use-cases"
+              sx={{
+                color: 'text.primary',
+                fontFamily: 'Montserrat',
+                fontSize: { md: '1.125rem', lg: '1.5rem' },
+                fontWeight: 700,
                 textTransform: 'none',
-                '&:hover': { color: 'primary.main' } 
+                '&:hover': { color: 'primary.main' }
               }}
             >
               Use Cases
             </Button>
-            <Button 
+            <Button
               component={Link}
-              to="/pricing" 
-              sx={{ 
-                color: 'text.primary', 
-                fontFamily: 'Montserrat', 
-                fontSize: { md: '1.125rem', lg: '1.5rem' }, 
-                fontWeight: 700, 
+              to="/pricing"
+              sx={{
+                color: 'text.primary',
+                fontFamily: 'Montserrat',
+                fontSize: { md: '1.125rem', lg: '1.5rem' },
+                fontWeight: 700,
                 textTransform: 'none',
-                '&:hover': { color: 'primary.main' } 
+                '&:hover': { color: 'primary.main' }
               }}
             >
               Pricing
             </Button>
-            <Typography sx={{ 
-              color: 'text.primary', 
-              fontFamily: 'Montserrat', 
-              fontSize: { md: '1.125rem', lg: '1.5rem' }, 
-              fontWeight: 700 
+            <Typography sx={{
+              color: 'text.primary',
+              fontFamily: 'Montserrat',
+              fontSize: { md: '1.125rem', lg: '1.5rem' },
+              fontWeight: 700
             }}>
               Your Credits :{userCredits}
             </Typography>
@@ -124,34 +124,34 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
           <Box sx={{ position: 'relative' }} ref={dropdownRef}>
             <Button
               onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-              sx={{ 
-                p: 0, 
-                minWidth: 0, 
-                width: { xs: '48px', md: '64px' }, 
-                height: { xs: '48px', md: '64px' }, 
-                borderRadius: '50%', 
+              sx={{
+                p: 0,
+                minWidth: 0,
+                width: { xs: '48px', md: '64px' },
+                height: { xs: '48px', md: '64px' },
+                borderRadius: '50%',
                 overflow: 'hidden',
-                '&:hover': { 
-                  outline: '2px solid', 
-                  outlineColor: 'primary.main' 
-                } 
+                '&:hover': {
+                  outline: '2px solid',
+                  outlineColor: 'primary.main'
+                }
               }}
             >
-              <Avatar 
-                src={userAvatar} 
+              <Avatar
+                src={userAvatar}
                 alt={userName}
-                sx={{ 
-                  width: '100%', 
+                sx={{
+                  width: '100%',
                   height: '100%',
                   backgroundColor: userAvatar ? 'transparent' : 'primary.dark'
                 }}
               >
                 {!userAvatar && (
-                  <Box sx={{ 
-                    width: '32px', 
-                    height: '32px', 
-                    backgroundColor: 'background.paper', 
-                    borderRadius: '50%' 
+                  <Box sx={{
+                    width: '32px',
+                    height: '32px',
+                    backgroundColor: 'background.paper',
+                    borderRadius: '50%'
                   }} />
                 )}
               </Avatar>
@@ -159,42 +159,42 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
             {/* Profile Dropdown */}
             {showProfileDropdown && (
-              <Paper sx={{ 
-                position: 'absolute', 
-                top: '100%', 
-                right: 0, 
-                mt: 1, 
-                width: '320px', 
-                borderRadius: '38px', 
-                boxShadow: 3, 
-                zIndex: 50, 
-                p: 3 
+              <Paper sx={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                mt: 1,
+                width: '320px',
+                borderRadius: '38px',
+                boxShadow: 3,
+                zIndex: 50,
+                p: 3
               }}>
                 {/* User Info */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                  <Avatar 
-                    src={userAvatar} 
+                  <Avatar
+                    src={userAvatar}
                     alt={userName}
-                    sx={{ 
-                      width: '80px', 
+                    sx={{
+                      width: '80px',
                       height: '80px',
                       backgroundColor: 'primary.dark'
                     }}
                   >
                     {!userAvatar && (
-                      <Box sx={{ 
-                        width: '40px', 
-                        height: '40px', 
-                        backgroundColor: 'background.paper', 
-                        borderRadius: '50%' 
+                      <Box sx={{
+                        width: '40px',
+                        height: '40px',
+                        backgroundColor: 'background.paper',
+                        borderRadius: '50%'
                       }} />
                     )}
                   </Avatar>
-                  <Typography sx={{ 
-                    color: 'text.primary', 
-                    fontFamily: 'Quicksand', 
-                    fontSize: '1.125rem', 
-                    fontWeight: 500 
+                  <Typography sx={{
+                    color: 'text.primary',
+                    fontFamily: 'Quicksand',
+                    fontSize: '1.125rem',
+                    fontWeight: 500
                   }}>
                     {userName}
                   </Typography>
@@ -204,17 +204,17 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                   <Button
                     component={Link}
-                    to="/change-password" 
+                    to="/change-password"
                     onClick={() => setShowProfileDropdown(false)}
                     startIcon={<LockIcon />}
-                    sx={{ 
-                      justifyContent: 'flex-start', 
-                      color: 'text.primary', 
-                      fontFamily: 'Quicksand', 
-                      fontSize: '1.125rem', 
+                    sx={{
+                      justifyContent: 'flex-start',
+                      color: 'text.primary',
+                      fontFamily: 'Quicksand',
+                      fontSize: '1.125rem',
                       fontWeight: 500,
                       textTransform: 'none',
-                      '&:hover': { color: 'primary.main' } 
+                      '&:hover': { color: 'primary.main' }
                     }}
                   >
                     Change password
@@ -224,17 +224,17 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
                   <Button
                     component={Link}
-                    to="/feedback" 
+                    to="/feedback"
                     onClick={() => setShowProfileDropdown(false)}
                     startIcon={<FeedbackIcon />}
-                    sx={{ 
-                      justifyContent: 'flex-start', 
-                      color: 'text.primary', 
-                      fontFamily: 'Quicksand', 
-                      fontSize: '1.125rem', 
+                    sx={{
+                      justifyContent: 'flex-start',
+                      color: 'text.primary',
+                      fontFamily: 'Quicksand',
+                      fontSize: '1.125rem',
                       fontWeight: 500,
                       textTransform: 'none',
-                      '&:hover': { color: 'primary.main' } 
+                      '&:hover': { color: 'primary.main' }
                     }}
                   >
                     Feedback
@@ -242,17 +242,17 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
                   <Button
                     component={Link}
-                    to="/history" 
+                    to="/history"
                     onClick={() => setShowProfileDropdown(false)}
                     startIcon={<HistoryIcon />}
-                    sx={{ 
-                      justifyContent: 'flex-start', 
-                      color: 'text.primary', 
-                      fontFamily: 'Quicksand', 
-                      fontSize: '1.125rem', 
+                    sx={{
+                      justifyContent: 'flex-start',
+                      color: 'text.primary',
+                      fontFamily: 'Quicksand',
+                      fontSize: '1.125rem',
                       fontWeight: 500,
                       textTransform: 'none',
-                      '&:hover': { color: 'primary.main' } 
+                      '&:hover': { color: 'primary.main' }
                     }}
                   >
                     History
@@ -265,15 +265,15 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
                     <Button
                       onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                       startIcon={<LanguageIcon />}
-                      sx={{ 
-                        justifyContent: 'flex-start', 
-                        color: 'text.primary', 
-                        fontFamily: 'Quicksand', 
-                        fontSize: '1.125rem', 
+                      sx={{
+                        justifyContent: 'flex-start',
+                        color: 'text.primary',
+                        fontFamily: 'Quicksand',
+                        fontSize: '1.125rem',
                         fontWeight: 500,
                         textTransform: 'none',
                         width: '100%',
-                        '&:hover': { color: 'primary.main' } 
+                        '&:hover': { color: 'primary.main' }
                       }}
                     >
                       Language
@@ -281,16 +281,16 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
                     {/* Language Dropdown */}
                     {showLanguageDropdown && (
-                      <Paper sx={{ 
-                        position: 'absolute', 
-                        bottom: '100%', 
-                        right: 0, 
-                        mb: 1, 
-                        width: '192px', 
-                        borderRadius: '20px', 
-                        boxShadow: 3, 
-                        zIndex: 50, 
-                        p: 2 
+                      <Paper sx={{
+                        position: 'absolute',
+                        bottom: '100%',
+                        right: 0,
+                        mb: 1,
+                        width: '192px',
+                        borderRadius: '20px',
+                        boxShadow: 3,
+                        zIndex: 50,
+                        p: 2
                       }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                           <Button
@@ -367,17 +367,17 @@ export function Navbar({ userCredits = 50, userName = "Alice ahmad", userAvatar 
 
                   <Button
                     component={Link}
-                    to="/signin" 
+                    to="/signin"
                     onClick={() => setShowProfileDropdown(false)}
                     startIcon={<LogoutIcon />}
-                    sx={{ 
-                      justifyContent: 'flex-start', 
-                      color: 'text.primary', 
-                      fontFamily: 'Quicksand', 
-                      fontSize: '1.125rem', 
+                    sx={{
+                      justifyContent: 'flex-start',
+                      color: 'text.primary',
+                      fontFamily: 'Quicksand',
+                      fontSize: '1.125rem',
                       fontWeight: 500,
                       textTransform: 'none',
-                      '&:hover': { color: 'primary.main' } 
+                      '&:hover': { color: 'primary.main' }
                     }}
                   >
                     Sign out

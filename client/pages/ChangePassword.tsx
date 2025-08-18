@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AikyuuLogo } from '@/components/ui/aikyuu-logo';
 
 // Eye slash icon component
 const EyeSlashIcon = () => (
-  <svg 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="w-6 h-6"
   >
-    <path 
-      d="M17.357 6.643L21 3M17.357 6.643C19.2348 7.84324 20.619 9.45359 21.4504 10.5944C21.7222 10.9674 21.8581 11.1538 21.9516 11.5146C22.0161 11.7633 22.0161 12.2367 21.9516 12.4854C21.8581 12.8462 21.7222 13.0326 21.4504 13.4056C19.961 15.4493 16.6974 19 12 19C9.92469 19 8.12923 18.3069 6.64299 17.357M17.357 6.643L13.4142 10.5858M2.99998 21L6.64299 17.357M6.64299 17.357L10.5858 13.4142M3.86085 15C3.33198 14.4297 2.8935 13.8775 2.54961 13.4056C2.2778 13.0326 2.1419 12.8462 2.04835 12.4854C1.98388 12.2367 1.98388 11.7633 2.04835 11.5146C2.1419 11.1538 2.2778 10.9674 2.54961 10.5944C4.03902 8.55068 7.30262 5 12 5C12.5904 5 13.1582 5.05609 13.7026 5.15824M13.4142 10.5858C13.7761 10.9477 14 11.4477 14 12C14 13.1046 13.1045 14 12 14C11.4477 14 10.9477 13.7761 10.5858 13.4142M13.4142 10.5858L10.5858 13.4142" 
-      stroke="#707070" 
-      strokeWidth="1.5" 
-      strokeLinecap="round" 
+    <path
+      d="M17.357 6.643L21 3M17.357 6.643C19.2348 7.84324 20.619 9.45359 21.4504 10.5944C21.7222 10.9674 21.8581 11.1538 21.9516 11.5146C22.0161 11.7633 22.0161 12.2367 21.9516 12.4854C21.8581 12.8462 21.7222 13.0326 21.4504 13.4056C19.961 15.4493 16.6974 19 12 19C9.92469 19 8.12923 18.3069 6.64299 17.357M17.357 6.643L13.4142 10.5858M2.99998 21L6.64299 17.357M6.64299 17.357L10.5858 13.4142M3.86085 15C3.33198 14.4297 2.8935 13.8775 2.54961 13.4056C2.2778 13.0326 2.1419 12.8462 2.04835 12.4854C1.98388 12.2367 1.98388 11.7633 2.04835 11.5146C2.1419 11.1538 2.2778 10.9674 2.54961 10.5944C4.03902 8.55068 7.30262 5 12 5C12.5904 5 13.1582 5.05609 13.7026 5.15824M13.4142 10.5858C13.7761 10.9477 14 11.4477 14 12C14 13.1046 13.1045 14 12 14C11.4477 14 10.9477 13.7761 10.5858 13.4142M13.4142 10.5858L10.5858 13.4142"
+      stroke="#707070"
+      strokeWidth="1.5"
+      strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
@@ -24,33 +24,33 @@ const EyeSlashIcon = () => (
 
 // Back arrow icon component
 const BackArrowIcon = () => (
-  <svg 
-    width="30" 
-    height="30" 
-    viewBox="0 0 30 30" 
-    fill="none" 
+  <svg
+    width="30"
+    height="30"
+    viewBox="0 0 30 30"
+    fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="w-7 h-7"
   >
-    <path 
-      d="M20.625 15L9.375 15" 
-      stroke="black" 
-      strokeWidth="1.5" 
-      strokeLinecap="round" 
+    <path
+      d="M20.625 15L9.375 15"
+      stroke="black"
+      strokeWidth="1.5"
+      strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path 
-      d="M13.75 19.375L9.375 15L13.75 10.625" 
-      stroke="black" 
-      strokeWidth="1.5" 
-      strokeLinecap="round" 
+    <path
+      d="M13.75 19.375L9.375 15L13.75 10.625"
+      stroke="black"
+      strokeWidth="1.5"
+      strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <path 
-      d="M3.75 15C3.75 9.6967 3.75 7.04505 5.39752 5.39752C7.04505 3.75 9.6967 3.75 15 3.75C20.3033 3.75 22.955 3.75 24.6025 5.39752C26.25 7.04505 26.25 9.6967 26.25 15C26.25 20.3033 26.25 22.955 24.6025 24.6025C22.955 26.25 20.3033 26.25 15 26.25C9.6967 26.25 7.04505 26.25 5.39752 24.6025C3.75 22.955 3.75 20.3033 3.75 15Z" 
-      stroke="black" 
-      strokeWidth="1.5" 
-      strokeLinecap="round" 
+    <path
+      d="M3.75 15C3.75 9.6967 3.75 7.04505 5.39752 5.39752C7.04505 3.75 9.6967 3.75 15 3.75C20.3033 3.75 22.955 3.75 24.6025 5.39752C26.25 7.04505 26.25 9.6967 26.25 15C26.25 20.3033 26.25 22.955 24.6025 24.6025C22.955 26.25 20.3033 26.25 15 26.25C9.6967 26.25 7.04505 26.25 5.39752 24.6025C3.75 22.955 3.75 20.3033 3.75 15Z"
+      stroke="black"
+      strokeWidth="1.5"
+      strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
@@ -72,17 +72,17 @@ export default function ChangePassword() {
   // Password strength calculation
   const calculatePasswordStrength = (password: string) => {
     if (!password) return { strength: 0, label: 'Empty' };
-    
+
     let score = 0;
     if (password.length >= 8) score++;
     if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
     if (/\d/.test(password)) score++;
     if (/[a-zA-Z]/.test(password)) score++;
-    
+
     const labels = ['Weak', 'Fair', 'Good', 'Strong'];
-    return { 
-      strength: score, 
-      label: score === 0 ? 'Empty' : labels[Math.min(score - 1, 3)] 
+    return {
+      strength: score,
+      label: score === 0 ? 'Empty' : labels[Math.min(score - 1, 3)]
     };
   };
 
@@ -119,14 +119,14 @@ export default function ChangePassword() {
           <div className="flex items-center gap-6 md:gap-12">
             {/* Navigation Links */}
             <div className="hidden md:flex items-end gap-8">
-              <Link 
-                to="/use-cases" 
+              <Link
+                to="/use-cases"
                 className="text-black font-montserrat text-lg md:text-2xl font-bold hover:text-aikyuu-primary transition-colors"
               >
                 Use Cases
               </Link>
-              <Link 
-                to="/pricing" 
+              <Link
+                to="/pricing"
                 className="text-black font-montserrat text-lg md:text-2xl font-bold hover:text-aikyuu-primary transition-colors"
               >
                 Pricing
@@ -138,8 +138,8 @@ export default function ChangePassword() {
 
             {/* Profile */}
             <div className="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden">
-              <img 
-                src="https://api.builder.io/api/v1/image/assets/TEMP/e7f6d580044efbb23c66de3733efc37ee4044bd7?width=200" 
+              <img
+                src="https://api.builder.io/api/v1/image/assets/TEMP/e7f6d580044efbb23c66de3733efc37ee4044bd7?width=200"
                 alt="User Avatar"
                 className="w-full h-full object-cover"
               />
@@ -214,9 +214,8 @@ export default function ChangePassword() {
                   {[...Array(4)].map((_, index) => (
                     <div
                       key={index}
-                      className={`h-3 w-20 rounded-full ${
-                        index < passwordStrength.strength ? 'bg-aikyuu-primary' : 'bg-gray-300'
-                      }`}
+                      className={`h-3 w-20 rounded-full ${index < passwordStrength.strength ? 'bg-aikyuu-primary' : 'bg-gray-300'
+                        }`}
                     />
                   ))}
                 </div>

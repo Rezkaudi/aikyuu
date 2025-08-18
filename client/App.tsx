@@ -37,10 +37,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/reset-password-new" element={<ResetPasswordNew />} />
+          <Route path="/forgot-password" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<ResetPasswordNew />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/create-position" element={<CreatePosition />} />

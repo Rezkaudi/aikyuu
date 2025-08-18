@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar } from '@/components/ui/navbar';
 
@@ -11,7 +10,7 @@ export default function PlaceholderPage({ title, description }: PlaceholderPageP
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
-      <Navbar 
+      <Navbar
         userCredits={50}
         userName="Alice ahmad"
         userAvatar="https://images.unsplash.com/photo-1494790108755-2616b60b7751?w=100&h=100&fit=crop&crop=face"
@@ -31,7 +30,7 @@ export default function PlaceholderPage({ title, description }: PlaceholderPageP
           <p className="text-lg text-gray-500 font-montserrat mb-8">
             This page is under construction. Continue prompting to have me fill in this page content.
           </p>
-          <Link 
+          <Link
             to="/dashboard"
             className="inline-block bg-aikyuu-primary text-aikyuu-dark px-8 py-4 rounded-2xl font-montserrat text-lg font-bold hover:bg-aikyuu-primary/90 transition-colors"
           >

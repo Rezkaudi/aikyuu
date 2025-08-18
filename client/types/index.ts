@@ -39,6 +39,8 @@ export interface CriteriaResult {
   text: string;
   passed: boolean;
   confidence: number;
+  name: string;
+  description: string;
 }
 
 export interface AnalysisSession {

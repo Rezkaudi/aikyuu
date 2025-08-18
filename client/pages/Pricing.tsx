@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  Box, 
-  Container, 
-  Typography, 
-  Button, 
-  Card, 
-  CardContent, 
-  Stack, 
-  Divider,
-  Grid 
+import { useState } from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  Grid
 } from '@mui/material';
 import { Check as CheckIcon } from '@mui/icons-material';
 import { Navbar } from '@/components/ui/navbar';
@@ -36,13 +34,13 @@ const PlanCard: React.FC<PlanCardProps> = ({
   highlighted = false,
   onSubscribe
 }) => (
-  <Card sx={{ 
-    position: 'relative', 
-    width: '100%', 
-    maxWidth: '512px', 
-    borderRadius: '50px', 
-    p: { xs: 4, md: 6 }, 
-    display: 'flex', 
+  <Card sx={{
+    position: 'relative',
+    width: '100%',
+    maxWidth: '512px',
+    borderRadius: '50px',
+    p: { xs: 4, md: 6 },
+    display: 'flex',
     flexDirection: 'column',
     border: highlighted ? '2px solid' : 'none',
     borderColor: highlighted ? 'primary.main' : 'transparent',
@@ -51,29 +49,29 @@ const PlanCard: React.FC<PlanCardProps> = ({
     <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
       {/* Header */}
       <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography variant="h3" sx={{ 
-          color: 'primary.main', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.875rem', md: '2.5rem' }, 
-          fontWeight: 700, 
-          mb: 2 
+        <Typography variant="h3" sx={{
+          color: 'primary.main',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.875rem', md: '2.5rem' },
+          fontWeight: 700,
+          mb: 2
         }}>
           {title}
         </Typography>
-        <Typography sx={{ 
-          color: 'primary.dark', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.5rem', md: '1.875rem' }, 
-          fontWeight: 700, 
-          mb: 3 
+        <Typography sx={{
+          color: 'primary.dark',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.5rem', md: '1.875rem' },
+          fontWeight: 700,
+          mb: 3
         }}>
           To improve your work
         </Typography>
-        <Typography sx={{ 
-          color: 'primary.dark', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-          lineHeight: 1.6 
+        <Typography sx={{
+          color: 'primary.dark',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.125rem', md: '1.25rem' },
+          lineHeight: 1.6
         }}>
           {description}
         </Typography>
@@ -82,27 +80,27 @@ const PlanCard: React.FC<PlanCardProps> = ({
       {/* Features */}
       <Stack spacing={2} sx={{ flex: 1, mb: 4 }}>
         {features.map((feature, index) => (
-          <Box key={index} sx={{ 
-            display: 'flex', 
-            alignItems: 'flex-start', 
-            gap: 2, 
-            py: 1, 
-            borderTop: '1px solid', 
-            borderBottom: '1px solid', 
-            borderColor: 'grey.200' 
+          <Box key={index} sx={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 2,
+            py: 1,
+            borderTop: '1px solid',
+            borderBottom: '1px solid',
+            borderColor: 'grey.200'
           }}>
-            <CheckIcon sx={{ 
-              color: 'primary.main', 
-              width: '28px', 
-              height: '28px', 
-              flexShrink: 0, 
-              mt: 0.25 
+            <CheckIcon sx={{
+              color: 'primary.main',
+              width: '28px',
+              height: '28px',
+              flexShrink: 0,
+              mt: 0.25
             }} />
-            <Typography sx={{ 
-              color: 'primary.dark', 
-              fontFamily: 'Montserrat', 
-              fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-              flex: 1 
+            <Typography sx={{
+              color: 'primary.dark',
+              fontFamily: 'Montserrat',
+              fontSize: { xs: '1.125rem', md: '1.25rem' },
+              flex: 1
             }}>
               {feature}
             </Typography>
@@ -113,27 +111,27 @@ const PlanCard: React.FC<PlanCardProps> = ({
       {/* Pricing */}
       <Box sx={{ textAlign: 'center', mb: 4 }}>
         <Box sx={{ mb: 1 }}>
-          <Typography sx={{ 
-            color: 'primary.dark', 
-            fontFamily: 'Montserrat', 
-            fontSize: { xs: '1.125rem', md: '1.25rem' } 
+          <Typography sx={{
+            color: 'primary.dark',
+            fontFamily: 'Montserrat',
+            fontSize: { xs: '1.125rem', md: '1.25rem' }
           }}>
             You pay:
           </Typography>
         </Box>
-        <Typography sx={{ 
-          color: 'primary.dark', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.5rem', md: '1.875rem' }, 
-          fontWeight: 700, 
-          mb: 1 
+        <Typography sx={{
+          color: 'primary.dark',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.5rem', md: '1.875rem' },
+          fontWeight: 700,
+          mb: 1
         }}>
           {price}
         </Typography>
-        <Typography sx={{ 
-          color: 'primary.dark', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.125rem', md: '1.25rem' } 
+        <Typography sx={{
+          color: 'primary.dark',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.125rem', md: '1.25rem' }
         }}>
           {billing}
         </Typography>
@@ -220,21 +218,21 @@ export default function Pricing() {
       <Container maxWidth="xl" sx={{ px: { xs: 2, md: 6 }, pb: 8 }}>
         {/* Header */}
         <Box sx={{ textAlign: 'center', mb: { xs: 8, md: 12 } }}>
-          <Typography variant="h1" sx={{ 
-            color: 'primary.dark', 
-            fontFamily: 'Montserrat', 
-            fontSize: { xs: '3rem', md: '3.75rem', lg: '4.5rem' }, 
-            fontWeight: 700, 
-            mb: 3 
+          <Typography variant="h1" sx={{
+            color: 'primary.dark',
+            fontFamily: 'Montserrat',
+            fontSize: { xs: '3rem', md: '3.75rem', lg: '4.5rem' },
+            fontWeight: 700,
+            mb: 3
           }}>
             Pricing
           </Typography>
           <Container maxWidth="md">
-            <Typography sx={{ 
-              color: 'primary.dark', 
-              fontFamily: 'Montserrat', 
-              fontSize: { xs: '1.25rem', md: '1.5rem', lg: '1.5625rem' }, 
-              lineHeight: 1.6 
+            <Typography sx={{
+              color: 'primary.dark',
+              fontFamily: 'Montserrat',
+              fontSize: { xs: '1.25rem', md: '1.5rem', lg: '1.5625rem' },
+              lineHeight: 1.6
             }}>
               Choose Your Plan
               <br />
@@ -246,7 +244,7 @@ export default function Pricing() {
         {/* Pricing Cards */}
         <Grid container spacing={{ xs: 4, lg: 6 }} justifyContent="center" sx={{ maxWidth: '1536px', mx: 'auto' }}>
           {plans.map((plan, index) => (
-            <Grid key={index} xs={12} lg={4} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
               <PlanCard
                 title={plan.title}
                 description={plan.description}
@@ -273,9 +271,9 @@ export default function Pricing() {
                 viewBox="0 0 53 86"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ 
-                  width: '40px', 
-                  height: '64px', 
+                style={{
+                  width: '40px',
+                  height: '64px',
                   fill: '#00EBBD'
                 }}
               >
@@ -284,19 +282,19 @@ export default function Pricing() {
                   fill="#00EBBD"
                 />
               </svg>
-              <Typography sx={{ 
-                color: 'primary.main', 
-                fontFamily: 'Poppins', 
-                fontSize: { xs: '1.875rem', md: '3rem', lg: '4rem' }, 
-                fontWeight: 700 
+              <Typography sx={{
+                color: 'primary.main',
+                fontFamily: 'Poppins',
+                fontSize: { xs: '1.875rem', md: '3rem', lg: '4rem' },
+                fontWeight: 700
               }}>
                 Aikyuu
               </Typography>
             </Stack>
-            <Typography sx={{ 
-              color: 'background.default', 
-              fontFamily: 'Poppins', 
-              fontSize: { xs: '1.125rem', md: '1.25rem' } 
+            <Typography sx={{
+              color: 'background.default',
+              fontFamily: 'Poppins',
+              fontSize: { xs: '1.125rem', md: '1.25rem' }
             }}>
               Copyright © Resumate. All rights reserved.
             </Typography>

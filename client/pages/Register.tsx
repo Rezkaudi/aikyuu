@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Box, 
-  Typography, 
-  Stack, 
-  Checkbox, 
-  FormControlLabel 
+import {
+  Box,
+  Typography,
+  Stack,
+  Checkbox,
+  FormControlLabel
 } from '@mui/material';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { InputField } from '@/components/ui/input-field';
@@ -48,55 +48,55 @@ export default function Register() {
           borderRadius: '8px',
         }}
       />
-      
+
       {/* Floating register icon */}
-      <Box sx={{ 
-        position: 'absolute', 
-        top: 4, 
-        right: 4, 
-        width: '64px', 
-        height: '64px', 
-        backgroundColor: 'primary.dark', 
-        borderRadius: '50%', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+      <Box sx={{
+        position: 'absolute',
+        top: 4,
+        right: 4,
+        width: '64px',
+        height: '64px',
+        backgroundColor: 'primary.dark',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
         <Typography sx={{ color: 'primary.main', fontSize: '0.75rem', fontWeight: 700 }}>
           Register ✓
         </Typography>
       </Box>
-      
+
       {/* Floating ID card icon */}
-      <Box sx={{ 
-        position: 'absolute', 
-        bottom: 8, 
-        left: 4, 
-        width: '80px', 
-        height: '64px', 
-        backgroundColor: 'primary.dark', 
-        borderRadius: '8px', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+      <Box sx={{
+        position: 'absolute',
+        bottom: 8,
+        left: 4,
+        width: '80px',
+        height: '64px',
+        backgroundColor: 'primary.dark',
+        borderRadius: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
         <Typography sx={{ color: 'primary.main', fontSize: '1.5rem' }}>
           📋
         </Typography>
       </Box>
-      
+
       {/* Floating chart icon */}
-      <Box sx={{ 
-        position: 'absolute', 
-        bottom: 16, 
-        right: 8, 
-        width: '64px', 
-        height: '64px', 
-        backgroundColor: 'primary.dark', 
-        borderRadius: '50%', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+      <Box sx={{
+        position: 'absolute',
+        bottom: 16,
+        right: 8,
+        width: '64px',
+        height: '64px',
+        backgroundColor: 'primary.dark',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}>
         <Typography sx={{ color: 'primary.main', fontSize: '1.5rem' }}>
           📊
@@ -109,32 +109,32 @@ export default function Register() {
     <AuthLayout rightContent={rightContent}>
       <Box sx={{ maxWidth: { xs: '100%', lg: '807px' } }}>
         {/* Heading */}
-        <Typography 
-          variant="h1" 
-          sx={{ 
-            color: 'primary.dark', 
-            fontFamily: 'Montserrat', 
-            fontSize: { xs: '2rem', md: '2.5rem', lg: '2.8125rem' }, 
-            fontWeight: 700, 
-            lineHeight: 'normal', 
-            mb: { xs: 2, md: '23px' } 
+        <Typography
+          variant="h1"
+          sx={{
+            color: 'primary.dark',
+            fontFamily: 'Montserrat',
+            fontSize: { xs: '2rem', md: '2.5rem', lg: '2.8125rem' },
+            fontWeight: 700,
+            lineHeight: 'normal',
+            mb: { xs: 2, md: '23px' }
           }}
         >
           Join Aikyuu, Let's Do it!
         </Typography>
-        
+
         {/* Subheading */}
-        <Typography sx={{ 
-          color: 'text.primary', 
-          fontFamily: 'Montserrat', 
-          fontSize: { xs: '1.125rem', md: '1.25rem', lg: '1.5rem' }, 
-          fontWeight: 500, 
-          lineHeight: 'normal', 
-          mb: { xs: 4, md: 8, lg: '133px' } 
+        <Typography sx={{
+          color: 'text.primary',
+          fontFamily: 'Montserrat',
+          fontSize: { xs: '1.125rem', md: '1.25rem', lg: '1.5rem' },
+          fontWeight: 500,
+          lineHeight: 'normal',
+          mb: { xs: 4, md: 8, lg: '133px' }
         }}>
           Enter below details to create an account
         </Typography>
-        
+
         {/* Form */}
         <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <InputField
@@ -145,7 +145,7 @@ export default function Register() {
             onChange={handleInputChange}
             sx={{ mb: 3 }}
           />
-          
+
           <InputField
             name="email"
             type="email"
@@ -154,7 +154,7 @@ export default function Register() {
             onChange={handleInputChange}
             sx={{ mb: 3 }}
           />
-          
+
           {/* Password Row */}
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3} sx={{ mb: 3 }}>
             <InputField
@@ -165,7 +165,7 @@ export default function Register() {
               onChange={handleInputChange}
               sx={{ flex: 1 }}
             />
-            
+
             <InputField
               name="confirmPassword"
               type="password"
@@ -175,7 +175,7 @@ export default function Register() {
               sx={{ flex: 1 }}
             />
           </Stack>
-          
+
           {/* Terms Checkbox */}
           <FormControlLabel
             control={
@@ -192,12 +192,12 @@ export default function Register() {
               />
             }
             label={
-              <Typography sx={{ 
-                color: 'primary.dark', 
-                fontFamily: 'Montserrat', 
-                fontSize: { xs: '1rem', md: '1.25rem' }, 
-                fontWeight: 400, 
-                lineHeight: 'normal' 
+              <Typography sx={{
+                color: 'primary.dark',
+                fontFamily: 'Montserrat',
+                fontSize: { xs: '1rem', md: '1.25rem' },
+                fontWeight: 400,
+                lineHeight: 'normal'
               }}>
                 I agree to the terms of service and{' '}
                 <Typography component="span" sx={{ fontWeight: 700 }}>
@@ -207,21 +207,21 @@ export default function Register() {
             }
             sx={{ mb: { xs: 4, md: 8, lg: '135px' } }}
           />
-          
+
           {/* Submit Button */}
           <AikyuuButton type="submit" sx={{ mb: { xs: 4, md: 8, lg: '117px' } }}>
             Sign Up
           </AikyuuButton>
-          
+
           {/* Sign In Link */}
           <Box sx={{ textAlign: 'center' }}>
-            <Typography 
-              component="span" 
-              sx={{ 
-                color: 'primary.dark', 
-                fontFamily: 'Montserrat', 
-                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
-                fontWeight: 500 
+            <Typography
+              component="span"
+              sx={{
+                color: 'primary.dark',
+                fontFamily: 'Montserrat',
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' },
+                fontWeight: 500
               }}
             >
               Already have an account ?{' '}
@@ -229,13 +229,13 @@ export default function Register() {
             <Typography
               component={Link}
               to="/signin"
-              sx={{ 
-                color: 'primary.main', 
-                fontFamily: 'Montserrat', 
-                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
-                fontWeight: 500, 
+              sx={{
+                color: 'primary.main',
+                fontFamily: 'Montserrat',
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' },
+                fontWeight: 500,
                 textDecoration: 'underline',
-                '&:hover': { textDecoration: 'none' } 
+                '&:hover': { textDecoration: 'none' }
               }}
             >
               Login

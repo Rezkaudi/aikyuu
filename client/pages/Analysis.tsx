@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Box, 
-  Container, 
-  Paper, 
-  Typography, 
-  LinearProgress, 
-  Stack 
+import {
+  Box,
+  Container,
+  Paper,
+  Typography,
+  LinearProgress,
+  Stack
 } from '@mui/material';
 import { Navbar } from '@/components/ui/navbar';
 
@@ -36,7 +36,7 @@ export default function Analysis() {
   return (
     <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
       {/* Navigation */}
-      <Navbar 
+      <Navbar
         userCredits={50}
         userName="Alice ahmad"
         userAvatar="https://images.unsplash.com/photo-1494790108755-2616b60b7751?w=100&h=100&fit=crop&crop=face"
@@ -49,18 +49,18 @@ export default function Analysis() {
           {/* Process Steps Indicator */}
           <Box sx={{ position: 'relative', mb: 8 }}>
             {/* Progress Line */}
-            <Box sx={{ 
-              position: 'absolute', 
-              top: '24px', 
-              left: '48px', 
-              right: '48px', 
-              height: '4px', 
+            <Box sx={{
+              position: 'absolute',
+              top: '24px',
+              left: '48px',
+              right: '48px',
+              height: '4px',
               backgroundColor: 'grey.300',
               borderRadius: '2px'
             }}>
-              <Box sx={{ 
-                position: 'absolute', 
-                inset: 0, 
+              <Box sx={{
+                position: 'absolute',
+                inset: 0,
                 background: 'linear-gradient(to right, #00EBBD, #00EBBD)',
                 borderRadius: '2px',
                 width: '67%'
@@ -71,40 +71,40 @@ export default function Analysis() {
             <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               {/* Step 1 - Completed */}
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Box sx={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: 'primary.main', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  mb: 2, 
-                  position: 'relative', 
-                  zIndex: 10 
+                <Box sx={{
+                  width: '48px',
+                  height: '48px',
+                  backgroundColor: 'primary.main',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  mb: 2,
+                  position: 'relative',
+                  zIndex: 10
                 }}>
-                  <Box sx={{ 
-                    width: '24px', 
-                    height: '24px', 
-                    backgroundColor: 'primary.dark', 
-                    borderRadius: '50%' 
+                  <Box sx={{
+                    width: '24px',
+                    height: '24px',
+                    backgroundColor: 'primary.dark',
+                    borderRadius: '50%'
                   }} />
                 </Box>
                 <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
-                  <Typography variant="h3" sx={{ 
-                    color: 'primary.dark', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
-                    fontWeight: 700, 
-                    mb: 1 
+                  <Typography variant="h3" sx={{
+                    color: 'primary.dark',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.5rem', md: '1.875rem' },
+                    fontWeight: 700,
+                    mb: 1
                   }}>
                     New Position
                   </Typography>
-                  <Typography sx={{ 
-                    color: 'text.secondary', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-                    fontWeight: 500 
+                  <Typography sx={{
+                    color: 'text.secondary',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.125rem', md: '1.25rem' },
+                    fontWeight: 500
                   }}>
                     Create New Position
                   </Typography>
@@ -113,40 +113,40 @@ export default function Analysis() {
 
               {/* Step 2 - Completed */}
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Box sx={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: 'primary.main', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  mb: 2, 
-                  position: 'relative', 
-                  zIndex: 10 
+                <Box sx={{
+                  width: '48px',
+                  height: '48px',
+                  backgroundColor: 'primary.main',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  mb: 2,
+                  position: 'relative',
+                  zIndex: 10
                 }}>
-                  <Box sx={{ 
-                    width: '24px', 
-                    height: '24px', 
-                    backgroundColor: 'primary.dark', 
-                    borderRadius: '50%' 
+                  <Box sx={{
+                    width: '24px',
+                    height: '24px',
+                    backgroundColor: 'primary.dark',
+                    borderRadius: '50%'
                   }} />
                 </Box>
                 <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
-                  <Typography variant="h3" sx={{ 
-                    color: 'primary.dark', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
-                    fontWeight: 700, 
-                    mb: 1 
+                  <Typography variant="h3" sx={{
+                    color: 'primary.dark',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.5rem', md: '1.875rem' },
+                    fontWeight: 700,
+                    mb: 1
                   }}>
                     Upload CV
                   </Typography>
-                  <Typography sx={{ 
-                    color: 'text.secondary', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-                    fontWeight: 500 
+                  <Typography sx={{
+                    color: 'text.secondary',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.125rem', md: '1.25rem' },
+                    fontWeight: 500
                   }}>
                     Download one or more CVs
                   </Typography>
@@ -155,33 +155,33 @@ export default function Analysis() {
 
               {/* Step 3 - Active */}
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Box sx={{ 
-                  width: '48px', 
-                  height: '48px', 
-                  backgroundColor: 'grey.300', 
-                  borderRadius: '50%', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center', 
-                  mb: 2, 
-                  position: 'relative', 
-                  zIndex: 10 
+                <Box sx={{
+                  width: '48px',
+                  height: '48px',
+                  backgroundColor: 'grey.300',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  mb: 2,
+                  position: 'relative',
+                  zIndex: 10
                 }} />
                 <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
-                  <Typography variant="h3" sx={{ 
-                    color: 'primary.dark', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
-                    fontWeight: 700, 
-                    mb: 1 
+                  <Typography variant="h3" sx={{
+                    color: 'primary.dark',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.5rem', md: '1.875rem' },
+                    fontWeight: 700,
+                    mb: 1
                   }}>
                     View Result
                   </Typography>
-                  <Typography sx={{ 
-                    color: 'text.secondary', 
-                    fontFamily: 'Montserrat', 
-                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-                    fontWeight: 500 
+                  <Typography sx={{
+                    color: 'text.secondary',
+                    fontFamily: 'Montserrat',
+                    fontSize: { xs: '1.125rem', md: '1.25rem' },
+                    fontWeight: 500
                   }}>
                     View Result
                   </Typography>
@@ -196,8 +196,8 @@ export default function Analysis() {
           <Paper sx={{ backgroundColor: 'primary.dark', borderRadius: '16px', p: 9, boxShadow: 1 }}>
             <Stack alignItems="center" spacing={3.5}>
               {/* Progress Bar */}
-              <LinearProgress 
-                variant="determinate" 
+              <LinearProgress
+                variant="determinate"
                 value={progress}
                 sx={{
                   width: '100%',
@@ -227,19 +227,19 @@ export default function Analysis() {
 
               {/* Processing Text */}
               <Stack direction="row" alignItems="center" spacing={1}>
-                <Typography sx={{ 
-                  color: 'primary.main', 
-                  fontFamily: 'Montserrat', 
-                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
-                  fontWeight: 700 
+                <Typography sx={{
+                  color: 'primary.main',
+                  fontFamily: 'Montserrat',
+                  fontSize: { xs: '1.25rem', md: '1.5rem' },
+                  fontWeight: 700
                 }}>
                   Processing
                 </Typography>
-                <Typography sx={{ 
-                  color: 'primary.main', 
-                  fontFamily: 'Montserrat', 
-                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
-                  fontWeight: 700 
+                <Typography sx={{
+                  color: 'primary.main',
+                  fontFamily: 'Montserrat',
+                  fontSize: { xs: '1.25rem', md: '1.5rem' },
+                  fontWeight: 700
                 }}>
                   {Math.round(progress)}%
                 </Typography>
@@ -251,11 +251,11 @@ export default function Analysis() {
         {/* Status Messages */}
         <Container maxWidth="lg" sx={{ mb: 8 }}>
           <Box sx={{ textAlign: 'center' }}>
-            <Typography sx={{ 
-              color: 'text.secondary', 
-              fontFamily: 'Montserrat', 
-              fontSize: '1.125rem', 
-              mb: 2 
+            <Typography sx={{
+              color: 'text.secondary',
+              fontFamily: 'Montserrat',
+              fontSize: '1.125rem',
+              mb: 2
             }}>
               {progress < 30 && "Analyzing uploaded CVs..."}
               {progress >= 30 && progress < 60 && "Comparing against criteria..."}
@@ -263,16 +263,16 @@ export default function Analysis() {
               {progress >= 90 && progress < 100 && "Finalizing results..."}
               {progress >= 100 && "Analysis complete!"}
             </Typography>
-            
+
             {progress >= 100 && (
-              <Box sx={{ 
-                animation: 'pulse 1.5s ease-in-out infinite' 
+              <Box sx={{
+                animation: 'pulse 1.5s ease-in-out infinite'
               }}>
-                <Typography sx={{ 
-                  color: 'primary.main', 
-                  fontFamily: 'Montserrat', 
-                  fontSize: '1.25rem', 
-                  fontWeight: 700 
+                <Typography sx={{
+                  color: 'primary.main',
+                  fontFamily: 'Montserrat',
+                  fontSize: '1.25rem',
+                  fontWeight: 700
                 }}>
                   Redirecting to results...
                 </Typography>
@@ -301,22 +301,22 @@ export default function Analysis() {
                   fill="#00EBBD"
                 />
               </svg>
-              <Typography sx={{ 
-                color: 'primary.main', 
-                fontFamily: 'Poppins', 
-                fontSize: { xs: '2.5rem', md: '3.75rem' }, 
-                fontWeight: 700 
+              <Typography sx={{
+                color: 'primary.main',
+                fontFamily: 'Poppins',
+                fontSize: { xs: '2.5rem', md: '3.75rem' },
+                fontWeight: 700
               }}>
                 Aikyuu
               </Typography>
             </Box>
 
             {/* Copyright */}
-            <Typography sx={{ 
-              color: 'grey.300', 
-              fontFamily: 'Poppins', 
-              fontSize: { xs: '1.125rem', md: '1.25rem' }, 
-              textAlign: 'center' 
+            <Typography sx={{
+              color: 'grey.300',
+              fontFamily: 'Poppins',
+              fontSize: { xs: '1.125rem', md: '1.25rem' },
+              textAlign: 'center'
             }}>
               Copyright © Resumate. All rights reserved.
             </Typography>
