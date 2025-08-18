@@ -9,7 +9,7 @@ import {
   CardContent, 
   Stack, 
   Divider,
-  Grid2 as Grid 
+  Grid 
 } from '@mui/material';
 import { Check as CheckIcon } from '@mui/icons-material';
 import { Navbar } from '@/components/ui/navbar';
