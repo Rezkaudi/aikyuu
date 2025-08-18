@@ -1,31 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Typography, Button, Container } from '@mui/material';
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-      <div className="text-center max-w-2xl mx-auto px-6">
-        <h1 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6">
+    <Box sx={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(to bottom right, #F1F5F9, #E2E8F0)', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center' 
+    }}>
+      <Container maxWidth="md" sx={{ textAlign: 'center', px: 3 }}>
+        <Typography variant="h1" sx={{ 
+          fontSize: { xs: '2.5rem', md: '3.75rem' }, 
+          fontWeight: 700, 
+          color: '#1E293B', 
+          mb: 3 
+        }}>
           Welcome to Aikyuu
-        </h1>
-        <p className="text-xl text-slate-600 mb-8">
+        </Typography>
+        <Typography variant="h5" sx={{ 
+          fontSize: '1.25rem', 
+          color: '#475569', 
+          mb: 4 
+        }}>
           Your AI-powered recruitment platform for smarter hiring decisions
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
+        </Typography>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' }, 
+          gap: 2, 
+          justifyContent: 'center' 
+        }}>
+          <Button
+            component={Link}
             to="/signin"
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            variant="contained"
+            sx={{ 
+              backgroundColor: '#2563EB', 
+              color: 'white', 
+              px: 4, 
+              py: 1.5, 
+              borderRadius: '8px', 
+              fontWeight: 600,
+              '&:hover': { backgroundColor: '#1D4ED8' } 
+            }}
           >
             Get Started
-          </Link>
-          <Link
+          </Button>
+          <Button
+            component={Link}
             to="/use-cases"
-            className="bg-white text-slate-800 px-8 py-3 rounded-lg font-semibold border border-slate-300 hover:bg-slate-50 transition-colors"
+            variant="outlined"
+            sx={{ 
+              backgroundColor: 'white', 
+              color: '#1E293B', 
+              px: 4, 
+              py: 1.5, 
+              borderRadius: '8px', 
+              fontWeight: 600, 
+              borderColor: '#CBD5E1',
+              '&:hover': { backgroundColor: '#F8FAFC' } 
+            }}
           >
             View Use Cases
-          </Link>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 }

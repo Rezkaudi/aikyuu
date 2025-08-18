@@ -1,4 +1,15 @@
 import React, { useState } from 'react';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogTitle, 
+  Box, 
+  Typography, 
+  Button, 
+  Divider, 
+  IconButton 
+} from '@mui/material';
+import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material';
 
 interface PurchaseModalProps {
   isOpen: boolean;
@@ -32,127 +43,246 @@ export function PurchaseModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-[30px] w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <div className="p-8 md:p-12">
+    <Dialog 
+      open={isOpen} 
+      onClose={onClose} 
+      maxWidth="md" 
+      fullWidth
+      PaperProps={{
+        sx: { borderRadius: '30px', maxHeight: '90vh' }
+      }}
+    >
+      <DialogContent sx={{ p: { xs: 4, md: 6 } }}>
+        <Box>
           {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <DialogTitle sx={{ 
+              color: 'primary.dark', 
+              fontFamily: 'Montserrat', 
+              fontSize: { xs: '1.5rem', md: '1.875rem' }, 
+              fontWeight: 700,
+              p: 0
+            }}>
               {planName}
-            </h2>
-          </div>
+            </DialogTitle>
+          </Box>
 
           {/* Content */}
-          <div className="space-y-8">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {/* Separator */}
-            <div className="w-full h-px bg-gray-200"></div>
+            <Divider />
 
             {/* Price and Credits Info */}
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl">
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' } 
+                }}>
                   Price per package:
-                </span>
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold">
+                </Typography>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700 
+                }}>
                   {pricePerPackage.toFixed(2)} $
-                </span>
-              </div>
+                </Typography>
+              </Box>
 
-              <div className="flex justify-between items-center">
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl">
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' } 
+                }}>
                   Credits per package:
-                </span>
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold">
+                </Typography>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700 
+                }}>
                   {creditsPerPackage} CVs
-                </span>
-              </div>
-            </div>
+                </Typography>
+              </Box>
+            </Box>
 
             {/* Separator */}
-            <div className="w-full h-px bg-gray-200"></div>
+            <Divider />
 
             {/* Quantity Selector */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl">
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', md: 'row' }, 
+              alignItems: { xs: 'flex-start', md: 'center' }, 
+              justifyContent: 'space-between', 
+              gap: 2 
+            }}>
+              <Typography sx={{ 
+                color: 'primary.dark', 
+                fontFamily: 'Montserrat', 
+                fontSize: { xs: '1.25rem', md: '1.5rem' } 
+              }}>
                 Select Quantity:
-              </span>
+              </Typography>
 
-              <div className="flex items-center gap-4">
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 {/* Decrease Button */}
-                <button
+                <IconButton
                   onClick={decrementQuantity}
                   disabled={quantity <= 1}
-                  className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center text-2xl md:text-3xl font-bold transition-colors ${
-                    quantity <= 1 
-                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-aikyuu-dark hover:bg-gray-300'
-                  }`}
+                  sx={{
+                    width: { xs: '48px', md: '64px' },
+                    height: { xs: '48px', md: '64px' },
+                    borderRadius: '12px',
+                    backgroundColor: quantity <= 1 ? 'grey.200' : 'grey.200',
+                    color: quantity <= 1 ? 'grey.400' : 'primary.dark',
+                    '&:hover': {
+                      backgroundColor: quantity <= 1 ? 'grey.200' : 'grey.300',
+                    },
+                    '&:disabled': {
+                      cursor: 'not-allowed',
+                    },
+                  }}
                 >
-                  −
-                </button>
+                  <RemoveIcon sx={{ fontSize: { xs: '1.5rem', md: '1.875rem' } }} />
+                </IconButton>
 
                 {/* Quantity Display */}
-                <div className="w-32 md:w-40 h-12 md:h-16 border-2 border-gray-200 rounded-xl flex items-center justify-center">
-                  <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold">
+                <Box sx={{ 
+                  width: { xs: '128px', md: '160px' }, 
+                  height: { xs: '48px', md: '64px' }, 
+                  border: '2px solid', 
+                  borderColor: 'grey.200', 
+                  borderRadius: '12px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center' 
+                }}>
+                  <Typography sx={{ 
+                    color: 'primary.dark', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                    fontWeight: 700 
+                  }}>
                     {quantity}
-                  </span>
-                </div>
+                  </Typography>
+                </Box>
 
                 {/* Increase Button */}
-                <button
+                <IconButton
                   onClick={incrementQuantity}
-                  className="w-12 h-12 md:w-16 md:h-16 bg-gray-200 rounded-xl flex items-center justify-center text-2xl md:text-3xl font-bold text-aikyuu-dark hover:bg-gray-300 transition-colors"
+                  sx={{
+                    width: { xs: '48px', md: '64px' },
+                    height: { xs: '48px', md: '64px' },
+                    borderRadius: '12px',
+                    backgroundColor: 'grey.200',
+                    color: 'primary.dark',
+                    '&:hover': {
+                      backgroundColor: 'grey.300',
+                    },
+                  }}
                 >
-                  +
-                </button>
-              </div>
-            </div>
+                  <AddIcon sx={{ fontSize: { xs: '1.5rem', md: '1.875rem' } }} />
+                </IconButton>
+              </Box>
+            </Box>
 
             {/* Separator */}
-            <div className="w-full h-px bg-gray-200"></div>
+            <Divider />
 
             {/* Totals */}
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl">
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' } 
+                }}>
                   Total Credits:
-                </span>
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold">
+                </Typography>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700 
+                }}>
                   {totalCredits} CVs
-                </span>
-              </div>
+                </Typography>
+              </Box>
 
-              <div className="flex justify-between items-center">
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl">
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' } 
+                }}>
                   Total Price:
-                </span>
-                <span className="text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold">
+                </Typography>
+                <Typography sx={{ 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700 
+                }}>
                   {totalPrice.toFixed(2)} $
-                </span>
-              </div>
-            </div>
+                </Typography>
+              </Box>
+            </Box>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-8">
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' }, 
+              gap: 2, 
+              pt: 4 
+            }}>
               {/* Cancel Button */}
-              <button
+              <Button
                 onClick={onClose}
-                className="flex-1 h-16 md:h-20 border border-gray-300 bg-white rounded-full text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold hover:bg-gray-50 transition-colors"
+                variant="outlined"
+                fullWidth
+                sx={{ 
+                  height: { xs: '64px', md: '80px' }, 
+                  borderRadius: '50px', 
+                  borderColor: 'grey.300', 
+                  backgroundColor: 'background.paper', 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700,
+                  '&:hover': { backgroundColor: 'grey.50' } 
+                }}
               >
                 Cancel
-              </button>
+              </Button>
 
               {/* Purchase Button */}
-              <button
+              <Button
                 onClick={handlePurchase}
-                className="flex-1 h-16 md:h-20 bg-aikyuu-primary rounded-full text-aikyuu-dark font-montserrat text-xl md:text-2xl font-bold hover:bg-aikyuu-primary/90 transition-colors"
+                variant="contained"
+                fullWidth
+                sx={{ 
+                  height: { xs: '64px', md: '80px' }, 
+                  borderRadius: '50px', 
+                  backgroundColor: 'primary.main', 
+                  color: 'primary.dark', 
+                  fontFamily: 'Montserrat', 
+                  fontSize: { xs: '1.25rem', md: '1.5rem' }, 
+                  fontWeight: 700,
+                  '&:hover': { backgroundColor: 'rgba(0, 235, 189, 0.9)' } 
+                }}
               >
                 Purchase for {totalPrice.toFixed(2)}$
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </DialogContent>
+    </Dialog>
   );
 }

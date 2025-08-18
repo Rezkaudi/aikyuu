@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Box, Typography, Stack } from '@mui/material';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { InputField } from '@/components/ui/input-field';
 import { AikyuuButton } from '@/components/ui/aikyuu-button';
@@ -32,26 +33,43 @@ export default function SignIn() {
 
   return (
     <AuthLayout>
-      <div className="max-w-full lg:max-w-[807px]">
+      <Box sx={{ maxWidth: { xs: '100%', lg: '807px' } }}>
         {/* Heading */}
-        <h1 className="text-aikyuu-dark font-montserrat text-2xl md:text-4xl lg:text-[45px] font-bold leading-normal mb-4 md:mb-[23px]">
+        <Typography 
+          variant="h1" 
+          sx={{ 
+            color: 'primary.dark', 
+            fontFamily: 'Montserrat', 
+            fontSize: { xs: '1.5rem', md: '2.5rem', lg: '2.8125rem' }, 
+            fontWeight: 700, 
+            lineHeight: 'normal', 
+            mb: { xs: 2, md: '23px' } 
+          }}
+        >
           Always Welcome, Aikyuu!
-        </h1>
+        </Typography>
 
         {/* Subheading */}
-        <p className="text-aikyuu-text font-montserrat text-lg md:text-xl lg:text-2xl font-medium leading-normal mb-8 md:mb-16 lg:mb-[167px]">
+        <Typography sx={{ 
+          color: 'text.primary', 
+          fontFamily: 'Montserrat', 
+          fontSize: { xs: '1.125rem', md: '1.25rem', lg: '1.5rem' }, 
+          fontWeight: 500, 
+          lineHeight: 'normal', 
+          mb: { xs: 4, md: 8, lg: '167px' } 
+        }}>
           Sign in to Aikyuu
-        </p>
+        </Typography>
         
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, md: 3 } }}>
           <InputField
             name="emailOrUsername"
             type="text"
             label="E-mail or username"
             value={formData.emailOrUsername}
             onChange={handleInputChange}
-            className="mb-4 md:mb-6"
+            sx={{ mb: { xs: 2, md: 3 } }}
           />
 
           <InputField
@@ -60,44 +78,80 @@ export default function SignIn() {
             label="Password"
             value={formData.password}
             onChange={handleInputChange}
-            className="mb-8 md:mb-16 lg:mb-[110px]"
+            sx={{ mb: { xs: 4, md: 8, lg: '110px' } }}
           />
 
           {/* Forgot Password Links */}
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-8 md:mb-16 lg:mb-[173px]">
-            <Link
+          <Stack 
+            direction={{ xs: 'column', sm: 'row' }} 
+            spacing={{ xs: 2, sm: 4 }} 
+            sx={{ mb: { xs: 4, md: 8, lg: '173px' } }}
+          >
+            <Typography
+              component={Link}
               to="/reset-password"
-              className="text-aikyuu-primary font-montserrat text-base md:text-lg lg:text-xl font-medium underline hover:no-underline"
+              sx={{ 
+                color: 'primary.main', 
+                fontFamily: 'Montserrat', 
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
+                fontWeight: 500, 
+                textDecoration: 'underline',
+                '&:hover': { textDecoration: 'none' } 
+              }}
             >
               Forgot password
-            </Link>
-            <Link
+            </Typography>
+            <Typography
+              component={Link}
               to="/reset-password"
-              className="text-aikyuu-primary font-montserrat text-base md:text-lg lg:text-xl font-medium underline hover:no-underline"
+              sx={{ 
+                color: 'primary.main', 
+                fontFamily: 'Montserrat', 
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
+                fontWeight: 500, 
+                textDecoration: 'underline',
+                '&:hover': { textDecoration: 'none' } 
+              }}
             >
               Forgot username
-            </Link>
-          </div>
+            </Typography>
+          </Stack>
 
           {/* Submit Button */}
-          <AikyuuButton type="submit" className="mb-8 md:mb-16 lg:mb-[117px]">
+          <AikyuuButton type="submit" sx={{ mb: { xs: 4, md: 8, lg: '117px' } }}>
             Log in
           </AikyuuButton>
 
           {/* Sign Up Link */}
-          <div className="text-center">
-            <span className="text-aikyuu-dark font-montserrat text-base md:text-lg lg:text-xl font-medium">
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography 
+              component="span" 
+              sx={{ 
+                color: 'primary.dark', 
+                fontFamily: 'Montserrat', 
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
+                fontWeight: 500 
+              }}
+            >
               Don't have an account?{' '}
-            </span>
-            <Link
+            </Typography>
+            <Typography
+              component={Link}
               to="/register"
-              className="text-aikyuu-primary font-montserrat text-base md:text-lg lg:text-xl font-medium underline hover:no-underline"
+              sx={{ 
+                color: 'primary.main', 
+                fontFamily: 'Montserrat', 
+                fontSize: { xs: '1rem', md: '1.125rem', lg: '1.25rem' }, 
+                fontWeight: 500, 
+                textDecoration: 'underline',
+                '&:hover': { textDecoration: 'none' } 
+              }}
             >
               Sign up
-            </Link>
-          </div>
-        </form>
-      </div>
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
     </AuthLayout>
   );
 }
