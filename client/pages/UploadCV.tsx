@@ -1,5 +1,20 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Box, 
+  Container, 
+  Paper, 
+  Typography, 
+  Button, 
+  IconButton, 
+  LinearProgress, 
+  Stack 
+} from '@mui/material';
+import { 
+  CloudUpload as CloudUploadIcon, 
+  CheckCircle as CheckCircleIcon, 
+  Delete as DeleteIcon 
+} from '@mui/icons-material';
 import { Navbar } from '@/components/ui/navbar';
 
 interface UploadedFile {
@@ -118,7 +133,7 @@ export default function UploadCV() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
       {/* Navigation */}
       <Navbar 
         userCredits={50}
@@ -127,137 +142,232 @@ export default function UploadCV() {
       />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-3 md:px-12">
+      <Container maxWidth="xl" sx={{ px: { xs: 1.5, md: 6 } }}>
         {/* Process Flow Section */}
-        <div className="bg-white rounded-[40px] p-8 md:p-14 mb-14">
+        <Paper sx={{ borderRadius: '40px', p: { xs: 4, md: 7 }, mb: 7 }}>
           {/* Process Steps Indicator */}
-          <div className="relative mb-16">
+          <Box sx={{ position: 'relative', mb: 8 }}>
             {/* Progress Line */}
-            <div className="absolute top-6 left-12 right-12 h-1 bg-gray-300">
-              <div className="absolute inset-0 bg-gradient-to-r from-aikyuu-primary via-aikyuu-primary to-gray-300" style={{width: '50%'}}></div>
-            </div>
+            <Box sx={{ 
+              position: 'absolute', 
+              top: '24px', 
+              left: '48px', 
+              right: '48px', 
+              height: '4px', 
+              backgroundColor: 'grey.300',
+              borderRadius: '2px'
+            }}>
+              <Box sx={{ 
+                position: 'absolute', 
+                inset: 0, 
+                background: 'linear-gradient(to right, #00EBBD, #00EBBD)',
+                borderRadius: '2px',
+                width: '50%'
+              }} />
+            </Box>
 
             {/* Step Circles */}
-            <div className="relative flex justify-between items-center">
+            <Box sx={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               {/* Step 1 - Completed */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-aikyuu-primary rounded-full flex items-center justify-center mb-4 relative z-10">
-                  <div className="w-6 h-6 bg-aikyuu-dark rounded-full"></div>
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: 'primary.main', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  mb: 2, 
+                  position: 'relative', 
+                  zIndex: 10 
+                }}>
+                  <Box sx={{ 
+                    width: '24px', 
+                    height: '24px', 
+                    backgroundColor: 'primary.dark', 
+                    borderRadius: '50%' 
+                  }} />
+                </Box>
+                <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
+                  <Typography variant="h3" sx={{ 
+                    color: 'primary.dark', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
+                    fontWeight: 700, 
+                    mb: 1 
+                  }}>
                     New Position
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
+                  </Typography>
+                  <Typography sx={{ 
+                    color: 'text.secondary', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
+                    fontWeight: 500 
+                  }}>
                     Create New Position
-                  </p>
-                </div>
-              </div>
+                  </Typography>
+                </Box>
+              </Box>
 
               {/* Step 2 - Active */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-aikyuu-primary rounded-full flex items-center justify-center mb-4 relative z-10">
-                  <div className="w-6 h-6 bg-aikyuu-dark rounded-full"></div>
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: 'primary.main', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  mb: 2, 
+                  position: 'relative', 
+                  zIndex: 10 
+                }}>
+                  <Box sx={{ 
+                    width: '24px', 
+                    height: '24px', 
+                    backgroundColor: 'primary.dark', 
+                    borderRadius: '50%' 
+                  }} />
+                </Box>
+                <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
+                  <Typography variant="h3" sx={{ 
+                    color: 'primary.dark', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
+                    fontWeight: 700, 
+                    mb: 1 
+                  }}>
                     Upload CV
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
+                  </Typography>
+                  <Typography sx={{ 
+                    color: 'text.secondary', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
+                    fontWeight: 500 
+                  }}>
                     Download one or more CVs
-                  </p>
-                </div>
-              </div>
+                  </Typography>
+                </Box>
+              </Box>
 
               {/* Step 3 - Inactive */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mb-4 relative z-10">
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{ 
+                  width: '48px', 
+                  height: '48px', 
+                  backgroundColor: 'grey.300', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  mb: 2, 
+                  position: 'relative', 
+                  zIndex: 10 
+                }} />
+                <Box sx={{ textAlign: 'center', maxWidth: '240px' }}>
+                  <Typography variant="h3" sx={{ 
+                    color: 'primary.dark', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.5rem', md: '1.875rem' }, 
+                    fontWeight: 700, 
+                    mb: 1 
+                  }}>
                     View Result
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
+                  </Typography>
+                  <Typography sx={{ 
+                    color: 'text.secondary', 
+                    fontFamily: 'Montserrat', 
+                    fontSize: { xs: '1.125rem', md: '1.25rem' }, 
+                    fontWeight: 500 
+                  }}>
                     View Result
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
 
         {/* Upload Section */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="bg-white rounded-2xl p-8 md:p-20 shadow-sm">
-            <div className="space-y-5">
+        <Container maxWidth="lg" sx={{ mb: 8 }}>
+          <Paper sx={{ borderRadius: '16px', p: { xs: 4, md: 10 }, boxShadow: 1 }}>
+            <Stack spacing={2.5}>
               {/* Upload Area */}
-              <div 
-                className={`border-2 border-dashed rounded-2xl p-16 text-center transition-colors ${
-                  isDragOver ? 'border-aikyuu-primary bg-aikyuu-primary/5' : 'border-gray-300 bg-white'
-                }`}
+              <Box 
+                sx={{
+                  border: '2px dashed',
+                  borderColor: isDragOver ? 'primary.main' : 'grey.300',
+                  backgroundColor: isDragOver ? 'rgba(0, 235, 189, 0.05)' : 'background.paper',
+                  borderRadius: '16px',
+                  p: 8,
+                  textAlign: 'center',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                }}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
+                onClick={handleClickUpload}
               >
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-15 h-15 bg-gray-200 rounded-full flex items-center justify-center">
-                    <svg 
-                      width="50" 
-                      height="50" 
-                      viewBox="0 0 51 50" 
-                      fill="none" 
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-12 h-12"
-                    >
-                      <path 
-                        d="M8.83398 33.3426V35.4173C8.83398 38.8691 11.6322 41.6673 15.084 41.6673H35.9173C39.3691 41.6673 42.1673 38.8691 42.1673 35.4173V33.334" 
-                        stroke="black" 
-                        strokeWidth="1.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                      <path 
-                        d="M25.5 32.2917V9.375" 
-                        stroke="black" 
-                        strokeWidth="1.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                      <path 
-                        d="M32.7923 16.6667L25.5007 9.375L18.209 16.6667" 
-                        stroke="black" 
-                        strokeWidth="1.5" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <button 
-                      onClick={handleClickUpload}
-                      className="text-black font-montserrat text-2xl font-bold underline hover:text-aikyuu-primary transition-colors"
+                <Stack alignItems="center" spacing={1.5}>
+                  <Box sx={{ 
+                    width: '60px', 
+                    height: '60px', 
+                    backgroundColor: 'grey.200', 
+                    borderRadius: '50%', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center' 
+                  }}>
+                    <CloudUploadIcon sx={{ width: '48px', height: '48px', color: 'text.primary' }} />
+                  </Box>
+                  <Box>
+                    <Typography 
+                      component="span"
+                      sx={{ 
+                        color: 'text.primary', 
+                        fontFamily: 'Montserrat', 
+                        fontSize: '1.5rem', 
+                        fontWeight: 700, 
+                        textDecoration: 'underline',
+                        cursor: 'pointer',
+                        '&:hover': { color: 'primary.main' },
+                        transition: 'color 0.3s'
+                      }}
                     >
                       Click to upload 
-                    </button>
-                    <span className="text-black font-montserrat text-2xl font-normal ml-2">
+                    </Typography>
+                    <Typography 
+                      component="span" 
+                      sx={{ 
+                        color: 'text.primary', 
+                        fontFamily: 'Montserrat', 
+                        fontSize: '1.5rem', 
+                        fontWeight: 400, 
+                        ml: 1 
+                      }}
+                    >
                       or drag and drop
-                    </span>
-                  </div>
-                </div>
-              </div>
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
 
               {/* Uploaded Files List */}
               {uploadedFiles.map((file) => (
-                <div key={file.id} className="border border-gray-300 rounded-2xl p-6 bg-white">
-                  <div className="flex items-center">
-                    <div className="mr-6">
-                      <svg 
-                        width="56" 
-                        height="60" 
-                        viewBox="0 0 56 60" 
-                        fill="none" 
+                <Paper key={file.id} variant="outlined" sx={{ borderRadius: '16px', p: 3 }}>
+                  <Stack direction="row" alignItems="center" spacing={3}>
+                    <Box sx={{ minWidth: '56px' }}>
+                      <Box
+                        component="svg"
+                        width="56"
+                        height="60"
+                        viewBox="0 0 56 60"
+                        fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-14 h-15"
+                        sx={{ width: '56px', height: '60px' }}
                       >
                         <path d="M15.7411 40.8262H13.9006C13.85 40.8262 13.8065 40.846 13.7699 40.8848C13.7333 40.9244 13.7148 40.9709 13.7148 41.0244V45.7791C13.7148 45.8325 13.7333 45.879 13.7699 45.9187C13.8065 45.9583 13.85 45.9773 13.9006 45.9773H14.4567C14.507 45.9773 14.5504 45.9583 14.5874 45.9187C14.624 45.879 14.6421 45.8325 14.6421 45.7791V44.1376H15.7411C16.2952 44.1376 16.7259 43.9954 17.0327 43.711C17.3391 43.4267 17.4927 43.014 17.4927 42.4745C17.4927 41.9351 17.3391 41.525 17.0327 41.2458C16.7259 40.9658 16.2952 40.8262 15.7411 40.8262ZM16.3318 43.0519C16.1762 43.1622 15.9679 43.2182 15.7069 43.2182H14.6421V41.7456H15.7069C15.9679 41.7456 16.1762 41.799 16.3318 41.9041C16.4874 42.0101 16.5654 42.1997 16.5654 42.4745C16.5654 42.7494 16.4874 42.9416 16.3318 43.0519Z" fill="black"/>
                         <path d="M21.632 41.3776C21.4647 41.201 21.2564 41.0649 21.0071 40.9692C20.7574 40.8736 20.4631 40.8262 20.1245 40.8262H18.428C18.3773 40.8262 18.3339 40.846 18.2973 40.8848C18.2607 40.9244 18.2422 40.9709 18.2422 41.0244V45.7791C18.2422 45.8325 18.2607 45.879 18.2973 45.9187C18.3339 45.9583 18.3773 45.9773 18.428 45.9773H20.1587C20.4884 45.9773 20.7755 45.9299 21.0208 45.8342C21.2657 45.7386 21.4708 45.6024 21.6356 45.4258C21.8001 45.2491 21.9272 45.0354 22.0168 44.7856C22.1061 44.5348 22.1596 44.2556 22.1781 43.9463C22.1962 43.5835 22.1962 43.2199 22.1781 42.8571C22.1596 42.5478 22.1061 42.2686 22.0168 42.0179C21.9272 41.768 21.7993 41.5543 21.632 41.3776ZM21.2508 43.9463C21.2416 44.1031 21.213 44.2505 21.1648 44.3875C21.1169 44.5253 21.0469 44.6434 20.9553 44.7407C20.864 44.839 20.7494 44.9165 20.6119 44.9725C20.4747 45.0294 20.3119 45.0578 20.1245 45.0578H19.1695V41.7456H20.0899C20.2869 41.7456 20.4562 41.774 20.5982 41.8309C20.7401 41.8869 20.8579 41.9653 20.952 42.0661C21.0457 42.1669 21.1169 42.2841 21.1648 42.4194C21.213 42.5547 21.2416 42.7003 21.2508 42.8571C21.2689 43.2199 21.2689 43.5835 21.2508 43.9463Z" fill="black"/>
@@ -266,113 +376,148 @@ export default function UploadCV() {
                         <path d="M40.102 25.0352H19.02C18.679 25.0352 18.4023 25.3316 18.4023 25.6969C18.4023 26.0623 18.679 26.3587 19.02 26.3587H40.102C40.443 26.3587 40.7197 26.0623 40.7197 25.6969C40.7197 25.3316 40.443 25.0352 40.102 25.0352Z" fill="black"/>
                         <path d="M19.02 21.2161H29.561C29.902 21.2161 30.1787 20.9197 30.1787 20.5543C30.1787 20.189 29.902 19.8926 29.561 19.8926H19.02C18.679 19.8926 18.4023 20.189 18.4023 20.5543C18.4023 20.9197 18.679 21.2161 19.02 21.2161Z" fill="black"/>
                         <path d="M40.102 30.1797H19.02C18.679 30.1797 18.4023 30.4761 18.4023 30.8415C18.4023 31.2068 18.679 31.5032 19.02 31.5032H40.102C40.443 31.5032 40.7197 31.2068 40.7197 30.8415C40.7197 30.4761 40.443 30.1797 40.102 30.1797Z" fill="black"/>
-                      </svg>
-                    </div>
+                      </Box>
+                    </Box>
                     
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-black font-montserrat text-xl font-medium">{file.name}</h3>
-                        <div className="flex items-center gap-4">
+                    <Box sx={{ flex: 1 }}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                        <Typography sx={{ 
+                          color: 'text.primary', 
+                          fontFamily: 'Montserrat', 
+                          fontSize: '1.25rem', 
+                          fontWeight: 500 
+                        }}>
+                          {file.name}
+                        </Typography>
+                        <Stack direction="row" alignItems="center" spacing={2}>
                           {file.isComplete ? (
-                            <div className="flex items-center justify-center w-10 h-8 bg-black rounded-full">
-                              <svg 
-                                width="28" 
-                                height="24" 
-                                viewBox="0 0 29 24" 
-                                fill="none" 
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-7 h-6"
-                              >
-                                <path 
-                                  d="M4.30273 14.4391L7.08929 17.0217C8.62596 18.4458 9.3943 19.1579 10.2554 19.3827C11.0116 19.5801 11.8156 19.5272 12.5363 19.2325C13.3569 18.897 14.0156 18.0909 15.3329 16.4788L25.1214 4.5" 
-                                  stroke="#00EBBD" 
-                                  strokeWidth="1.5" 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </div>
+                            <Box sx={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              justifyContent: 'center', 
+                              width: '40px', 
+                              height: '32px', 
+                              backgroundColor: 'text.primary', 
+                              borderRadius: '50%' 
+                            }}>
+                              <CheckCircleIcon sx={{ 
+                                width: '28px', 
+                                height: '24px', 
+                                color: 'primary.main' 
+                              }} />
+                            </Box>
                           ) : (
-                            <button
+                            <IconButton
                               onClick={() => handleDeleteFile(file.id)}
-                              className="p-2 hover:bg-red-50 rounded-lg transition-colors group"
+                              sx={{
+                                p: 1,
+                                '&:hover': { backgroundColor: 'rgba(255, 0, 0, 0.1)' },
+                                borderRadius: '8px',
+                                transition: 'background-color 0.3s',
+                              }}
                             >
-                              <svg 
-                                width="32" 
-                                height="32" 
-                                viewBox="0 0 32 32" 
-                                fill="none" 
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-8 h-8 stroke-black group-hover:stroke-red-500 transition-colors"
-                              >
-                                <path 
-                                  d="M8.38086 11.4277L9.90467 26.6658H22.0951L23.619 11.4277" 
-                                  strokeWidth="1.5" 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round"
-                                />
-                                <path 
-                                  d="M18 20.6667V14" 
-                                  strokeWidth="1.5" 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round"
-                                />
-                                <path 
-                                  d="M14 20.6667V14" 
-                                  strokeWidth="1.5" 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round"
-                                />
-                                <path 
-                                  d="M6.0957 8.3816H12.1909M12.1909 8.3816L12.7004 6.34394C12.8487 5.75038 13.3821 5.33398 13.9939 5.33398H18.007C18.6189 5.33398 19.1522 5.75038 19.3006 6.34394L19.81 8.3816M12.1909 8.3816H19.81M19.81 8.3816H25.9052" 
-                                  strokeWidth="1.5" 
-                                  strokeLinecap="round" 
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </button>
+                              <DeleteIcon sx={{ 
+                                width: '32px', 
+                                height: '32px', 
+                                color: 'text.primary',
+                                '&:hover': { color: 'error.main' },
+                                transition: 'color 0.3s'
+                              }} />
+                            </IconButton>
                           )}
-                          <span className="text-black font-montserrat text-xl font-medium w-12 text-right">
+                          <Typography sx={{ 
+                            color: 'text.primary', 
+                            fontFamily: 'Montserrat', 
+                            fontSize: '1.25rem', 
+                            fontWeight: 500, 
+                            minWidth: '48px', 
+                            textAlign: 'right' 
+                          }}>
                             {file.progress}%
-                          </span>
-                        </div>
-                      </div>
+                          </Typography>
+                        </Stack>
+                      </Stack>
                       
-                      <p className="text-gray-500 font-montserrat text-base mb-3">{file.size}</p>
+                      <Typography sx={{ 
+                        color: 'text.secondary', 
+                        fontFamily: 'Montserrat', 
+                        fontSize: '1rem', 
+                        mb: 1.5 
+                      }}>
+                        {file.size}
+                      </Typography>
                       
                       {/* Progress Bar */}
-                      <div className="w-full bg-gray-300 rounded-full h-3">
-                        <div 
-                          className="bg-aikyuu-primary h-3 rounded-full transition-all duration-300"
-                          style={{ width: `${file.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                      <LinearProgress 
+                        variant="determinate" 
+                        value={file.progress}
+                        sx={{
+                          height: '12px',
+                          borderRadius: '6px',
+                          backgroundColor: 'grey.300',
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: 'primary.main',
+                            borderRadius: '6px',
+                          },
+                        }}
+                      />
+                    </Box>
+                  </Stack>
+                </Paper>
               ))}
-            </div>
-          </div>
-        </div>
+            </Stack>
+          </Paper>
+        </Container>
 
         {/* Action Buttons */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="flex justify-end items-center gap-4">
-            <button
+        <Container maxWidth="lg" sx={{ mb: 8 }}>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: 'flex-end' }}>
+            <Button
               onClick={handleCancel}
-              className="px-8 py-4 rounded-[26px] border border-gray-300 bg-white text-aikyuu-dark font-montserrat text-lg font-bold hover:bg-gray-50 transition-colors shadow-sm"
+              variant="outlined"
+              sx={{
+                px: 4,
+                py: 2,
+                borderRadius: '26px',
+                borderColor: 'grey.400',
+                color: 'primary.dark',
+                fontFamily: 'Montserrat',
+                fontSize: '1.125rem',
+                fontWeight: 700,
+                textTransform: 'none',
+                boxShadow: 1,
+                '&:hover': {
+                  backgroundColor: 'grey.50',
+                  borderColor: 'grey.400',
+                },
+              }}
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleAnalysis}
-              className="px-8 py-4 rounded-[26px] bg-aikyuu-primary text-aikyuu-dark font-montserrat text-lg font-bold hover:bg-aikyuu-primary/90 transition-colors shadow-sm"
+              variant="contained"
+              sx={{
+                px: 4,
+                py: 2,
+                borderRadius: '26px',
+                backgroundColor: 'primary.main',
+                color: 'primary.dark',
+                fontFamily: 'Montserrat',
+                fontSize: '1.125rem',
+                fontWeight: 700,
+                textTransform: 'none',
+                boxShadow: 1,
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 235, 189, 0.9)',
+                },
+              }}
             >
               analysis
-            </button>
-          </div>
-        </div>
-      </div>
+            </Button>
+          </Stack>
+        </Container>
+      </Container>
 
       {/* Hidden File Input */}
       <input
@@ -381,40 +526,50 @@ export default function UploadCV() {
         multiple
         accept=".pdf,.doc,.docx"
         onChange={handleFileInputChange}
-        className="hidden"
+        style={{ display: 'none' }}
       />
 
       {/* Footer */}
-      <footer className="bg-gray-800 py-20">
-        <div className="max-w-7xl mx-auto px-12">
-          <div className="flex flex-col items-center gap-8">
+      <Box component="footer" sx={{ backgroundColor: 'grey.800', py: 10 }}>
+        <Container maxWidth="xl" sx={{ px: 6 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             {/* Logo */}
-            <div className="flex items-center gap-2">
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <svg
                 width="52"
                 height="86"
                 viewBox="0 0 53 87"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-20 fill-aikyuu-primary"
+                style={{ width: '48px', height: '80px', fill: '#00EBBD' }}
               >
                 <path
                   d="M34.7183 86.5C34.2121 86.3976 34.0062 86.0288 33.7227 85.7419C26.4361 78.3638 21.2602 69.1269 18.7447 59.012C18.4475 57.5946 17.8379 56.2633 16.9614 55.1175C16.0848 53.9716 14.9639 53.0408 13.6822 52.3944C10.4153 50.571 6.96267 49.0958 3.77671 47.088C-0.610738 44.3563 -0.587117 42.4372 3.81721 39.6918C7.19217 37.5816 10.9046 36.1269 14.2796 34.0372C15.7291 33.326 16.9471 32.2098 17.7895 30.8206C18.1528 29.9007 18.4252 28.9468 18.6029 27.9727C21.2408 17.8517 26.4229 8.59367 33.6451 1.09937C34.4382 0.279853 34.8432 0.320829 35.6127 1.09937C41.0126 6.54917 46.4317 11.9705 51.8699 17.3634C52.582 18.0463 52.7238 18.4697 51.9509 19.2688C51.9509 19.2688 47.8301 25.5381 45.7005 28.6284C44.3974 30.9007 42.5555 32.8089 40.341 34.1806C36.7906 36.1269 33.014 37.6226 29.5412 39.7533C28.1 40.6343 26.2742 41.5358 26.2539 43.3592C26.2337 45.2646 28.1203 46.166 29.6019 47.0675C32.8689 49.0753 36.4025 50.5505 39.8112 52.3124C42.3643 53.8013 44.4653 55.9696 45.8861 58.5817C47.9111 61.6345 52.0555 67.675 52.0555 67.675C52.7035 68.3579 52.6023 68.6994 52.015 69.2935C46.4733 74.7843 40.9721 80.3126 35.4541 85.8239C35.228 86.0698 34.9445 86.2917 34.7183 86.5Z"
                   fill="#00EBBD"
                 />
               </svg>
-              <span className="text-aikyuu-primary font-poppins text-4xl md:text-6xl font-bold">
+              <Typography sx={{ 
+                color: 'primary.main', 
+                fontFamily: 'Poppins', 
+                fontSize: { xs: '2.5rem', md: '3.75rem' }, 
+                fontWeight: 700 
+              }}>
                 Aikyuu
-              </span>
-            </div>
+              </Typography>
+            </Box>
 
             {/* Copyright */}
-            <p className="text-gray-300 font-poppins text-lg md:text-xl text-center">
+            <Typography sx={{ 
+              color: 'grey.300', 
+              fontFamily: 'Poppins', 
+              fontSize: { xs: '1.125rem', md: '1.25rem' }, 
+              textAlign: 'center' 
+            }}>
               Copyright © Resumate. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 }
