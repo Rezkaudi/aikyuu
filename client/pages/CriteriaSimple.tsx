@@ -10,7 +10,7 @@ import {
   Divider, 
   TextField, 
   Stack, 
-  Grid2 as Grid,
+  Grid,
   IconButton
 } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
