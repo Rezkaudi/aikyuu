@@ -297,7 +297,7 @@ export default function CriteriaManagement() {
                     <Stack direction="row" alignItems="center" spacing={3}>
                       <Grid container columns={2} spacing={0.5} sx={{ width: '24px' }}>
                         {[...Array(6)].map((_, i) => (
-                          <Grid key={i} size={1}>
+                          <Grid key={i} xs={1}>
                             <Box sx={{ width: '4px', height: '4px', backgroundColor: 'grey.400', borderRadius: '50%' }} />
                           </Grid>
                         ))}
