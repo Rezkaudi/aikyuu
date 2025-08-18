@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Container } from '@mui/material';
 import { AikyuuLogo } from '@/components/ui/aikyuu-logo';
 
 interface AuthLayoutProps {
@@ -8,55 +9,127 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children, rightContent }: AuthLayoutProps) {
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col lg:flex-row">
+    <Box sx={{ 
+      minHeight: '100vh', 
+      width: '100%', 
+      backgroundColor: 'background.paper', 
+      display: 'flex', 
+      flexDirection: { xs: 'column', lg: 'row' } 
+    }}>
       {/* Left Side - Form */}
-      <div className="flex-1 lg:max-w-[960px] relative">
+      <Box sx={{ flex: 1, maxWidth: { lg: '960px' }, position: 'relative' }}>
         {/* Logo */}
-        <div className="absolute left-4 md:left-[77px] top-4 md:top-[63px] z-10">
+        <Box sx={{ 
+          position: 'absolute', 
+          left: { xs: 2, md: '77px' }, 
+          top: { xs: 2, md: '63px' }, 
+          zIndex: 10 
+        }}>
           <AikyuuLogo />
-        </div>
+        </Box>
 
         {/* Form Content */}
-        <div className="px-4 md:px-[77px] pt-24 md:pt-[243px] pb-4 md:pb-[77px] min-h-screen lg:min-h-0">
+        <Container sx={{ 
+          px: { xs: 2, md: '77px' }, 
+          pt: { xs: 12, md: '243px' }, 
+          pb: { xs: 2, md: '77px' }, 
+          minHeight: { xs: '100vh', lg: 0 } 
+        }}>
           {children}
-        </div>
-      </div>
+        </Container>
+      </Box>
 
       {/* Right Side - Background/Illustration */}
-      <div className="hidden lg:flex flex-1 lg:min-w-[960px] relative bg-white shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+      <Box sx={{ 
+        display: { xs: 'none', lg: 'flex' }, 
+        flex: 1, 
+        minWidth: '960px', 
+        position: 'relative', 
+        backgroundColor: 'background.paper',
+        boxShadow: '0 4px 4px 0 rgba(0,0,0,0.25)' 
+      }}>
         {/* Background gradient/pattern overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-200" />
+        <Box sx={{ 
+          position: 'absolute', 
+          inset: 0, 
+          background: 'linear-gradient(to bottom right, #F9FAFB, #E5E7EB)' 
+        }} />
 
         {/* Content */}
         {rightContent && (
-          <div className="relative z-10 w-full h-full flex items-center justify-center p-8">
+          <Box sx={{ 
+            position: 'relative', 
+            zIndex: 10, 
+            width: '100%', 
+            height: '100%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            p: 4 
+          }}>
             {rightContent}
-          </div>
+          </Box>
         )}
 
         {/* Default illustration elements if no content provided */}
         {!rightContent && (
-          <div className="relative z-10 w-full h-full">
+          <Box sx={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
             {/* Decorative circles and shapes */}
-            <div className="absolute top-[320px] right-[231px] w-[190px] h-[196px] opacity-20">
-              <div className="w-full h-full bg-aikyuu-primary rounded-full" />
-            </div>
+            <Box sx={{ 
+              position: 'absolute', 
+              top: '320px', 
+              right: '231px', 
+              width: '190px', 
+              height: '196px', 
+              opacity: 0.2 
+            }}>
+              <Box sx={{ 
+                width: '100%', 
+                height: '100%', 
+                backgroundColor: 'primary.main', 
+                borderRadius: '50%' 
+              }} />
+            </Box>
 
             {/* Person illustration placeholder */}
-            <div className="absolute top-[433px] right-[326px] w-[353px] h-[364px]">
+            <Box sx={{ 
+              position: 'absolute', 
+              top: '433px', 
+              right: '326px', 
+              width: '353px', 
+              height: '364px' 
+            }}>
               <img
                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop&crop=face"
                 alt="Professional person"
-                className="w-full h-full object-cover rounded-lg"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
               />
-            </div>
+            </Box>
 
             {/* Floating UI elements */}
-            <div className="absolute top-[650px] left-[180px] w-[114px] h-[123px] bg-aikyuu-dark rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)]" />
-            <div className="absolute top-[390px] left-[237px] w-[80px] h-[86px] bg-aikyuu-dark rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)]" />
-          </div>
+            <Box sx={{ 
+              position: 'absolute', 
+              top: '650px', 
+              left: '180px', 
+              width: '114px', 
+              height: '123px', 
+              backgroundColor: 'primary.dark', 
+              borderRadius: '12px', 
+              boxShadow: '0 0 4px 0 rgba(0,0,0,0.25)' 
+            }} />
+            <Box sx={{ 
+              position: 'absolute', 
+              top: '390px', 
+              left: '237px', 
+              width: '80px', 
+              height: '86px', 
+              backgroundColor: 'primary.dark', 
+              borderRadius: '12px', 
+              boxShadow: '0 0 4px 0 rgba(0,0,0,0.25)' 
+            }} />
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

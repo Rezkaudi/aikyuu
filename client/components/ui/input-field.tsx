@@ -1,27 +1,53 @@
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { TextField, TextFieldProps } from '@mui/material';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<TextFieldProps, 'variant'> {
   label?: string;
   error?: boolean;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, type, ...props }, ref) => {
+  ({ label, error, type, sx, ...props }, ref) => {
     return (
-      <div className="relative">
-        <input
-          type={type}
-          className={cn(
-            'flex h-16 md:h-20 w-full rounded-[10px] border border-aikyuu-gray-line bg-white px-4 md:px-10 py-4 md:py-6 text-lg md:text-xl lg:text-2xl font-montserrat font-normal placeholder:text-aikyuu-gray-line focus:outline-none focus:ring-2 focus:ring-aikyuu-primary focus:border-transparent',
-            error && 'border-aikyuu-error',
-            className
-          )}
-          ref={ref}
-          placeholder={label}
-          {...props}
-        />
-      </div>
+      <TextField
+        type={type}
+        label={label}
+        variant="outlined"
+        fullWidth
+        error={error}
+        inputRef={ref}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            height: { xs: '64px', md: '80px' },
+            borderRadius: '16px',
+            fontSize: { xs: '1.125rem', md: '1.25rem', lg: '1.5rem' },
+            fontFamily: 'Montserrat',
+            backgroundColor: 'background.paper',
+            '& fieldset': {
+              borderColor: '#C1C1C1',
+            },
+            '&:hover fieldset': {
+              borderColor: 'primary.main',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'primary.main',
+              borderWidth: '2px',
+            },
+            ...(error && {
+              '& fieldset': {
+                borderColor: 'error.main',
+              },
+            }),
+          },
+          '& .MuiInputLabel-root': {
+            fontSize: { xs: '1rem', md: '1.25rem' },
+            color: '#C1C1C1',
+            fontFamily: 'Montserrat',
+          },
+          ...sx,
+        }}
+        {...props}
+      />
     );
   }
 );

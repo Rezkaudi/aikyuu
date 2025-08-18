@@ -1,8 +1,9 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 
 export function AikyuuLogo() {
   return (
-    <div className="inline-flex justify-center items-center gap-1">
+    <Box sx={{ display: 'inline-flex', justifyContent: 'center', alignItems: 'center', gap: 0.5 }}>
       <svg
         width="27"
         height="44"
@@ -16,9 +17,18 @@ export function AikyuuLogo() {
           fill="#00EBBD"
         />
       </svg>
-      <span className="text-aikyuu-primary font-poppins text-xl md:text-2xl lg:text-[32px] font-bold leading-normal">
+      <Typography
+        variant="h4"
+        sx={{
+          color: 'primary.main',
+          fontFamily: 'Poppins',
+          fontSize: { xs: '1.25rem', md: '1.5rem', lg: '2rem' },
+          fontWeight: 700,
+          lineHeight: 'normal',
+        }}
+      >
         Aikyuu
-      </span>
-    </div>
+      </Typography>
+    </Box>
   );
 }

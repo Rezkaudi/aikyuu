@@ -1,28 +1,47 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { Button, ButtonProps as MuiButtonProps } from '@mui/material';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<MuiButtonProps, 'variant'> {
   variant?: 'primary' | 'secondary';
-  children: React.ReactNode;
 }
 
 export function AikyuuButton({ 
-  className, 
   variant = 'primary', 
   children, 
+  sx,
   ...props 
 }: ButtonProps) {
   return (
-    <button
-      className={cn(
-        'flex w-full h-16 md:h-20 px-2.5 justify-center items-center gap-2.5 rounded-100 font-montserrat text-lg md:text-xl lg:text-[26px] font-bold leading-normal transition-colors',
-        variant === 'primary' && 'bg-aikyuu-primary text-black hover:bg-aikyuu-primary/90',
-        variant === 'secondary' && 'bg-transparent text-aikyuu-primary border border-aikyuu-primary hover:bg-aikyuu-primary/10',
-        className
-      )}
+    <Button
+      variant={variant === 'primary' ? 'contained' : 'outlined'}
+      fullWidth
+      sx={{
+        height: { xs: '64px', md: '80px' },
+        borderRadius: '100px',
+        fontFamily: 'Montserrat',
+        fontSize: { xs: '1.125rem', md: '1.25rem', lg: '1.625rem' },
+        fontWeight: 700,
+        textTransform: 'none',
+        ...(variant === 'primary' && {
+          backgroundColor: 'primary.main',
+          color: 'text.primary',
+          '&:hover': {
+            backgroundColor: '#00D4A8',
+          },
+        }),
+        ...(variant === 'secondary' && {
+          backgroundColor: 'transparent',
+          color: 'primary.main',
+          borderColor: 'primary.main',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 235, 189, 0.1)',
+          },
+        }),
+        ...sx,
+      }}
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 }
