@@ -246,7 +246,7 @@ export default function Pricing() {
         {/* Pricing Cards */}
         <Grid container spacing={{ xs: 4, lg: 6 }} justifyContent="center" sx={{ maxWidth: '1536px', mx: 'auto' }}>
           {plans.map((plan, index) => (
-            <Grid key={index} size={{ xs: 12, lg: 4 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid key={index} xs={12} lg={4} sx={{ display: 'flex', justifyContent: 'center' }}>
               <PlanCard
                 title={plan.title}
                 description={plan.description}
