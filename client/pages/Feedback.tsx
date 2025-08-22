@@ -1,4 +1,22 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container, 
+  Card, 
+  CardContent,
+  TextField,
+  Stack,
+  Input,
+  FormLabel,
+  Divider
+} from '@mui/material';
+import { 
+  CloudUpload as CloudUploadIcon, 
+  Cancel as CancelIcon,
+  Send as SendIcon
+} from '@mui/icons-material';
 import { Navbar } from '@/components/ui/navbar';
 
 export default function Feedback() {
@@ -32,132 +50,299 @@ export default function Feedback() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F7F7]">
+    <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
       {/* Navigation */}
       <Navbar />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 md:px-12 pb-16">
+      <Container maxWidth="lg" sx={{ pb: { xs: 8, md: 16 } }}>
         {/* Header */}
-        <div className="text-center mb-16 md:mb-24">
-          <h1 className="text-aikyuu-dark font-montserrat text-5xl md:text-6xl lg:text-[72px] font-bold mb-6">
+        <Box textAlign="center" sx={{ mb: { xs: 8, md: 12 } }}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "3rem", md: "4.5rem" },
+              fontWeight: 700,
+              mb: 3,
+              color: "text.primary",
+            }}
+          >
             feedback
-          </h1>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-aikyuu-dark font-montserrat text-xl md:text-2xl lg:text-[25px] leading-relaxed">
+          </Typography>
+          <Container maxWidth="md">
+            <Typography
+              variant="h6"
+              sx={{
+                color: "text.primary",
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
+                lineHeight: 1.6,
+              }}
+            >
               Choose Your Plan<br />
               Select the perfect package for your recruitment needs
-            </p>
-          </div>
-        </div>
+            </Typography>
+          </Container>
+        </Box>
 
         {/* Feedback Form */}
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-[30px] p-8 md:p-16">
-            {/* Form Header */}
-            <div className="mb-12">
-              <h2 className="text-aikyuu-dark font-montserrat text-2xl md:text-[30px] font-normal mb-8">
-                Submit Feedback
-              </h2>
-              <div className="w-full h-1.5 bg-[#F2F2F2] rounded"></div>
-            </div>
+        <Container maxWidth="md">
+          <Card
+            sx={{
+              borderRadius: "30px",
+              p: { xs: 4, md: 8 },
+              boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <CardContent sx={{ p: { xs: 4, md: 8 } }}>
+              {/* Form Header */}
+              <Box sx={{ mb: 6 }}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 500,
+                    mb: 4,
+                    color: "text.primary",
+                    fontSize: { xs: "1.5rem", md: "1.875rem" },
+                  }}
+                >
+                  Submit Feedback
+                </Typography>
+                <Divider sx={{ height: 1.5, bgcolor: "grey.200" }} />
+              </Box>
 
-            {/* Form Fields */}
-            <div className="space-y-8 md:space-y-12">
-              {/* Title Field */}
-              <div className="space-y-3">
-                <label className="block text-[#707070] font-montserrat text-lg md:text-xl font-normal capitalize tracking-wide">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => handleInputChange('title', e.target.value)}
-                  className="w-full h-16 md:h-[71px] px-4 md:px-6 border border-[#C1C1C1] rounded-2xl bg-white font-montserrat text-lg md:text-xl text-aikyuu-dark placeholder:text-[#C1C1C1] focus:outline-none focus:ring-2 focus:ring-aikyuu-primary"
-                  placeholder=""
-                />
-              </div>
-
-              {/* Description Field */}
-              <div className="space-y-3">
-                <label className="block text-[#707070] font-montserrat text-lg md:text-xl font-normal capitalize tracking-wide">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  rows={6}
-                  className="w-full h-32 md:h-[140px] px-4 md:px-6 py-4 border border-[#C1C1C1] rounded-2xl bg-white font-montserrat text-lg md:text-xl text-aikyuu-dark placeholder:text-[#C1C1C1] focus:outline-none focus:ring-2 focus:ring-aikyuu-primary resize-none"
-                  placeholder=""
-                />
-              </div>
-
-              {/* File Upload Field */}
-              <div className="space-y-3 max-w-sm">
-                <label className="block text-[#707070] font-montserrat text-lg md:text-xl font-normal capitalize tracking-wide">
-                  Attach Image (optional)
-                </label>
-                <div className="relative">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              {/* Form Fields */}
+              <Stack spacing={{ xs: 4, md: 6 }}>
+                {/* Title Field */}
+                <Box>
+                  <FormLabel
+                    sx={{
+                      display: "block",
+                      color: "grey.500",
+                      fontSize: { xs: "1.125rem", md: "1.25rem" },
+                      fontWeight: 400,
+                      mb: 1.5,
+                      textTransform: "capitalize",
+                      letterSpacing: "0.025em",
+                    }}
+                  >
+                    Title
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        height: { xs: "64px", md: "71px" },
+                        borderRadius: "16px",
+                        '& fieldset': {
+                          borderColor: "grey.400",
+                        },
+                      },
+                      '& .MuiOutlinedInput-input': {
+                        fontSize: { xs: "1.125rem", md: "1.25rem" },
+                        color: "text.primary",
+                      },
+                    }}
                   />
-                  <div className="h-16 md:h-[71px] px-6 md:px-10 bg-[#F8F7F7] border border-white rounded-2xl shadow-lg flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors">
-                    <span className="text-[#707070] font-montserrat text-lg md:text-xl font-normal capitalize tracking-wide">
-                      {formData.attachedFile ? formData.attachedFile.name : 'choose file'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                </Box>
 
-            {/* Action Buttons */}
-            <div className="flex justify-end gap-4 mt-12 md:mt-16">
-              <button
-                onClick={handleCancel}
-                className="w-48 md:w-[221px] h-12 md:h-14 bg-white rounded-full shadow-sm border border-gray-200 text-aikyuu-dark font-montserrat text-base md:text-lg font-bold hover:bg-gray-50 transition-colors"
+                {/* Description Field */}
+                <Box>
+                  <FormLabel
+                    sx={{
+                      display: "block",
+                      color: "grey.500",
+                      fontSize: { xs: "1.125rem", md: "1.25rem" },
+                      fontWeight: 400,
+                      mb: 1.5,
+                      textTransform: "capitalize",
+                      letterSpacing: "0.025em",
+                    }}
+                  >
+                    Description
+                  </FormLabel>
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={6}
+                    value={formData.description}
+                    onChange={(e) => handleInputChange('description', e.target.value)}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        minHeight: { xs: "128px", md: "140px" },
+                        borderRadius: "16px",
+                        '& fieldset': {
+                          borderColor: "grey.400",
+                        },
+                      },
+                      '& .MuiOutlinedInput-input': {
+                        fontSize: { xs: "1.125rem", md: "1.25rem" },
+                        color: "text.primary",
+                      },
+                    }}
+                  />
+                </Box>
+
+                {/* File Upload Field */}
+                <Box sx={{ maxWidth: "400px" }}>
+                  <FormLabel
+                    sx={{
+                      display: "block",
+                      color: "grey.500",
+                      fontSize: { xs: "1.125rem", md: "1.25rem" },
+                      fontWeight: 400,
+                      mb: 1.5,
+                      textTransform: "capitalize",
+                      letterSpacing: "0.025em",
+                    }}
+                  >
+                    Attach Image (optional)
+                  </FormLabel>
+                  <Box sx={{ position: "relative" }}>
+                    <Input
+                      type="file"
+                      inputProps={{ accept: "image/*" }}
+                      onChange={handleFileChange}
+                      sx={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        opacity: 0,
+                        cursor: "pointer",
+                      }}
+                    />
+                    <Button
+                      variant="outlined"
+                      component="div"
+                      startIcon={<CloudUploadIcon />}
+                      sx={{
+                        height: { xs: "64px", md: "71px" },
+                        px: { xs: 3, md: 5 },
+                        backgroundColor: "background.default",
+                        border: "1px solid white",
+                        borderRadius: "16px",
+                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                        color: "grey.500",
+                        fontSize: { xs: "1.125rem", md: "1.25rem" },
+                        fontWeight: 400,
+                        textTransform: "capitalize",
+                        letterSpacing: "0.025em",
+                        width: "100%",
+                        justifyContent: "flex-start",
+                        '&:hover': {
+                          backgroundColor: "grey.100",
+                          borderColor: "white",
+                        },
+                      }}
+                    >
+                      {formData.attachedFile ? formData.attachedFile.name : 'choose file'}
+                    </Button>
+                  </Box>
+                </Box>
+              </Stack>
+
+              {/* Action Buttons */}
+              <Stack 
+                direction="row" 
+                spacing={2} 
+                justifyContent="flex-end" 
+                sx={{ mt: { xs: 6, md: 8 } }}
               >
-                Cancel
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="w-48 md:w-[221px] h-12 md:h-14 bg-aikyuu-primary rounded-full shadow-sm text-aikyuu-dark font-montserrat text-base md:text-lg font-bold hover:bg-aikyuu-primary/90 transition-colors"
-              >
-                Submit Feedback
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+                <Button
+                  variant="outlined"
+                  onClick={handleCancel}
+                  startIcon={<CancelIcon />}
+                  sx={{
+                    minWidth: { xs: 180, md: 200 },
+                    height: { xs: 48, md: 56 },
+                    borderRadius: "25px",
+                    fontSize: { xs: "1rem", md: "1.125rem" },
+                    fontWeight: 700,
+                    borderColor: "grey.200",
+                    color: "text.primary",
+                    '&:hover': {
+                      backgroundColor: "grey.50",
+                      borderColor: "grey.200",
+                    },
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit}
+                  endIcon={<SendIcon />}
+                  sx={{
+                    minWidth: { xs: 180, md: 200 },
+                    height: { xs: 48, md: 56 },
+                    borderRadius: "25px",
+                    fontSize: { xs: "1rem", md: "1.125rem" },
+                    fontWeight: 700,
+                  }}
+                >
+                  Submit Feedback
+                </Button>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Container>
+      </Container>
 
       {/* Footer */}
-      <footer className="bg-[#1F1F1F] py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="flex justify-center items-center gap-2 mb-8">
-            <svg
-              width="53"
-              height="86"
-              viewBox="0 0 53 86"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-10 h-16 md:w-[53px] md:h-[86px] fill-aikyuu-primary"
+      <Box
+        component="footer"
+        sx={{
+          backgroundColor: "secondary.main",
+          py: { xs: 8, md: 10 },
+        }}
+      >
+        <Container maxWidth="lg">
+          <Stack spacing={4} alignItems="center">
+            {/* Logo */}
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Box
+                component="svg"
+                sx={{
+                  width: { xs: 40, md: 53 },
+                  height: { xs: 68, md: 86 },
+                  fill: "primary.main",
+                }}
+                viewBox="0 0 53 86"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M34.7183 86C34.2121 85.8976 34.0062 85.5288 33.7227 85.2419C26.4361 77.8638 21.2602 68.6269 18.7447 58.512C18.4475 57.0946 17.8379 55.7633 16.9614 54.6175C16.0848 53.4716 14.9639 52.5408 13.6822 51.8944C10.4153 50.071 6.96267 48.5958 3.77671 46.588C-0.610738 43.8563 -0.587117 41.9372 3.81721 39.1918C7.19217 37.0816 10.9046 35.6269 14.2796 33.5372C15.7291 32.826 16.9471 31.7098 17.7895 30.3206C18.1528 29.4007 18.4252 28.4468 18.6029 27.4727C21.2408 17.3517 26.4229 8.09367 33.6451 0.599371C34.4382 -0.220147 34.8432 -0.179171 35.6127 0.599371C41.0126 6.04917 46.4317 11.4705 51.8699 16.8634C52.582 17.5463 52.7238 17.9697 51.9509 18.7688C51.9509 18.7688 47.8301 25.0381 45.7005 28.1284C44.3974 30.4007 42.5555 32.3089 40.341 33.6806C36.7906 35.6269 33.014 37.1226 29.5412 39.2533C28.1 40.1343 26.2742 41.0358 26.2539 42.8592C26.2337 44.7646 28.1203 45.666 29.6019 46.5675C32.8689 48.5753 36.4025 50.0505 39.8112 51.8124C42.3643 53.3013 44.4653 55.4696 45.8861 58.0817C47.9111 61.1345 52.0555 67.175 52.0555 67.175C52.7035 67.8579 52.6023 68.1994 52.015 68.7935C46.4733 74.2843 40.9721 79.8126 35.4541 85.3239C35.228 85.5698 34.9445 85.7917 34.7183 86Z"
+                />
+              </Box>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 700,
+                  color: "primary.main",
+                  fontSize: { xs: "1.875rem", md: "4rem" },
+                }}
+              >
+                Aikyuu
+              </Typography>
+            </Stack>
+
+            {/* Copyright */}
+            <Typography
+              variant="body1"
+              sx={{
+                color: "background.default",
+                fontFamily: "Poppins",
+                textAlign: "center",
+              }}
             >
-              <path
-                d="M34.7183 86C34.2121 85.8976 34.0062 85.5288 33.7227 85.2419C26.4361 77.8638 21.2602 68.6269 18.7447 58.512C18.4475 57.0946 17.8379 55.7633 16.9614 54.6175C16.0848 53.4716 14.9639 52.5408 13.6822 51.8944C10.4153 50.071 6.96267 48.5958 3.77671 46.588C-0.610738 43.8563 -0.587117 41.9372 3.81721 39.1918C7.19217 37.0816 10.9046 35.6269 14.2796 33.5372C15.7291 32.826 16.9471 31.7098 17.7895 30.3206C18.1528 29.4007 18.4252 28.4468 18.6029 27.4727C21.2408 17.3517 26.4229 8.09367 33.6451 0.599371C34.4382 -0.220147 34.8432 -0.179171 35.6127 0.599371C41.0126 6.04917 46.4317 11.4705 51.8699 16.8634C52.582 17.5463 52.7238 17.9697 51.9509 18.7688C51.9509 18.7688 47.8301 25.0381 45.7005 28.1284C44.3974 30.4007 42.5555 32.3089 40.341 33.6806C36.7906 35.6269 33.014 37.1226 29.5412 39.2533C28.1 40.1343 26.2742 41.0358 26.2539 42.8592C26.2337 44.7646 28.1203 45.666 29.6019 46.5675C32.8689 48.5753 36.4025 50.0505 39.8112 51.8124C42.3643 53.3013 44.4653 55.4696 45.8861 58.0817C47.9111 61.1345 52.0555 67.175 52.0555 67.175C52.7035 67.8579 52.6023 68.1994 52.015 68.7935C46.4733 74.2843 40.9721 79.8126 35.4541 85.3239C35.228 85.5698 34.9445 85.7917 34.7183 86Z"
-                fill="#00EBBD"
-              />
-            </svg>
-            <span className="text-aikyuu-primary font-poppins text-3xl md:text-5xl lg:text-[64px] font-bold">
-              Aikyuu
-            </span>
-          </div>
-          <p className="text-[#F8F7F7] font-poppins text-lg md:text-xl">
-            Copyright © Resumate. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+              Copyright © Resumate. All rights reserved.
+            </Typography>
+          </Stack>
+        </Container>
+      </Box>
+    </Box>
   );
 }
