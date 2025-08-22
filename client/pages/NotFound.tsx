@@ -1,5 +1,7 @@
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Box, Typography, Button, Container } from "@mui/material";
+import { Home as HomeIcon } from "@mui/icons-material";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,15 +14,54 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
-      </div>
-    </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "grey.100",
+      }}
+    >
+      <Container maxWidth="sm">
+        <Box textAlign="center">
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "3rem", md: "4rem" },
+              fontWeight: 700,
+              mb: 3,
+              color: "text.primary",
+            }}
+          >
+            404
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              mb: 4,
+              color: "text.secondary",
+              fontWeight: 500,
+            }}
+          >
+            Oops! Page not found
+          </Typography>
+          <Button
+            variant="contained"
+            startIcon={<HomeIcon />}
+            href="/"
+            sx={{
+              borderRadius: "25px",
+              px: 4,
+              py: 2,
+              fontSize: "1.125rem",
+            }}
+          >
+            Return to Home
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
