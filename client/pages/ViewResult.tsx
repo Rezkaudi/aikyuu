@@ -1,314 +1,660 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Navbar } from '../components/ui/navbar';
+import React, { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container, 
+  Card, 
+  CardContent,
+  TextField,
+  Stack,
+  Grid,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  Divider,
+  Avatar
+} from '@mui/material';
+import { 
+  Download as DownloadIcon,
+  Share as ShareIcon,
+  Close as CloseIcon,
+  Person as PersonIcon,
+  Work as WorkIcon,
+  School as SchoolIcon,
+  Star as StarIcon
+} from '@mui/icons-material';
+import { Navbar } from '@/components/ui/navbar';
 
-// Mock data for candidates - updated to match Figma design
-const candidates = [
-  {
-    id: 1,
-    name: 'alice almorshed',
-    score: 50,
-    criteria: [
-      { text: 'Office ipsum be muted. Charts closest desig', passed: true },
-      { text: 'Office ipsum be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must closest desig', passed: true },
-      { text: 'Office ipsum you must be muted. Charts desig', passed: false },
-      { text: 'Office ipsum you must be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must be muted', passed: true },
-      { text: 'Office ipsum you closest desig', passed: true },
-      { text: 'Office ipsum you must be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must be muted. Charts', passed: true }
-    ]
-  },
-  {
-    id: 2,
-    name: 'alice almorshed',
-    score: 50,
-    criteria: [
-      { text: 'Office ipsum be muted. Charts closest desig', passed: true },
-      { text: 'Office ipsum be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must closest desig', passed: true },
-      { text: 'Office ipsum you must be muted. Charts desig', passed: false },
-      { text: 'Office ipsum you must be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must be muted', passed: true },
-      { text: 'Office ipsum you closest desig', passed: true },
-      { text: 'Office ipsum you must be muted. Charts closest desig', passed: false },
-      { text: 'Office ipsum you must be muted. Charts', passed: true }
-    ]
-  }
-];
+interface ShareModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-const CheckIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-    <path
-      d="M39.9559 63.1864C39.7077 63.436 39.3692 63.5754 39.0174 63.5754C38.6656 63.5754 38.327 63.436 38.0788 63.1864L30.5835 55.6898C29.8055 54.9118 29.8055 53.6506 30.5835 52.874L31.522 51.9355C32.3 51.1575 33.5598 51.1575 34.3378 51.9355L39.0174 56.6151L51.6622 43.9702C52.4402 43.1922 53.7014 43.1922 54.478 43.9702L55.4165 44.9088C56.1945 45.6867 56.1945 46.9479 55.4165 47.7245L39.9559 63.1864Z"
-      fill="#00EBBD"
-    />
-  </svg>
-);
+const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
+  const [email, setEmail] = useState('');
 
-const XIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-    <path
-      d="M45.9015 122.481L51.3401 127.92C51.941 128.52 51.941 129.495 51.3401 130.095L50.615 130.82C50.0139 131.421 49.0397 131.421 48.4398 130.82L43.0014 125.381L37.5629 130.821C36.9619 131.422 35.9877 131.422 35.3878 130.821L34.6616 130.096C34.0607 129.495 34.0607 128.52 34.6616 127.921L40.1011 122.481L34.6627 117.043C34.0617 116.442 34.0617 115.467 34.6627 114.867L35.3878 114.142C35.9887 113.541 36.9629 113.541 37.5629 114.142L43.0014 119.581L48.4398 114.142C49.0409 113.541 50.0151 113.541 50.615 114.142L51.3401 114.867C51.941 115.468 51.941 116.443 51.3401 117.043L45.9015 122.481Z"
-      fill="#FF4656"
-    />
-  </svg>
-);
+  const handleShare = () => {
+    console.log('Sharing to:', email);
+    // Handle sharing logic
+    onClose();
+  };
 
-const ToggleSwitch = ({ isOn }: { isOn: boolean }) => (
-  <div className="relative w-16 h-9 bg-gray-300 rounded-full p-1">
-    <div className="w-8 h-8 bg-aikyuu-primary rounded-full flex items-center justify-center">
-      <div className="w-5 h-5 bg-aikyuu-dark rounded-full"></div>
-    </div>
-  </div>
-);
-
-const CandidateCard = ({ candidate }: { candidate: typeof candidates[0] }) => {
   return (
-    <div className="flex flex-col items-center gap-9">
-      {/* Score Header */}
-      <div className="w-full max-w-[701px]">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-aikyuu-dark font-montserrat text-2xl font-bold">
-            {candidate.name}
-          </h3>
-          <span className="text-aikyuu-dark font-montserrat text-xl font-medium">
-            Score: {candidate.score}%
-          </span>
-        </div>
-        {/* Progress Bar */}
-        <div className="relative">
-          <div className="w-full h-1.5 bg-gray-300 rounded-full"></div>
-          <div
-            className="absolute top-0 left-0 h-1.5 bg-aikyuu-primary rounded-full"
-            style={{ width: `${candidate.score}%` }}
-          ></div>
-          <div
-            className="absolute top-0 w-3 h-3 bg-aikyuu-primary rounded-full transform -translate-y-1/2 translate-y-0.5"
-            style={{ left: `${candidate.score}%`, transform: 'translateX(-50%) translateY(-25%)' }}
-          ></div>
-        </div>
-      </div>
-
-      {/* Analysis Section */}
-      <div className="w-full max-w-[701px]">
-        {/* Toggle Header */}
-        <div className="flex items-center gap-6 mb-5">
-          <ToggleSwitch isOn={true} />
-          <h4 className="text-aikyuu-dark font-montserrat text-2xl font-bold">
-            Analysis cv
-          </h4>
-        </div>
-
-        {/* Criteria List */}
-        <div className="bg-white rounded-[40px] p-8">
-          <div className="space-y-0">
-            {candidate.criteria.map((criterion, index) => (
-              <div key={index} className="flex items-center py-4 border-b border-gray-200 last:border-b-0">
-                <div className="mr-6 flex-shrink-0">
-                  {criterion.passed ? (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-                      <path
-                        d="M39.9559 63.1864C39.7077 63.436 39.3692 63.5754 39.0174 63.5754C38.6656 63.5754 38.327 63.436 38.0788 63.1864L30.5835 55.6898C29.8055 54.9118 29.8055 53.6506 30.5835 52.874L31.522 51.9355C32.3 51.1575 33.5598 51.1575 34.3378 51.9355L39.0174 56.6151L51.6622 43.9702C52.4402 43.1922 53.7014 43.1922 54.478 43.9702L55.4165 44.9088C56.1945 45.6867 56.1945 46.9479 55.4165 47.7245L39.9559 63.1864Z"
-                        fill="#00EBBD"
-                        transform="scale(0.4)"
-                      />
-                    </svg>
-                  ) : (
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="w-6 h-6">
-                      <path
-                        d="M45.9015 122.481L51.3401 127.92C51.941 128.52 51.941 129.495 51.3401 130.095L50.615 130.82C50.0139 131.421 49.0397 131.421 48.4398 130.82L43.0014 125.381L37.5629 130.821C36.9619 131.422 35.9877 131.422 35.3878 130.821L34.6616 130.096C34.0607 129.495 34.0607 128.52 34.6616 127.921L40.1011 122.481L34.6627 117.043C34.0617 116.442 34.0617 115.467 34.6627 114.867L35.3878 114.142C35.9887 113.541 36.9629 113.541 37.5629 114.142L43.0014 119.581L48.4398 114.142C49.0409 113.541 50.0151 113.541 50.615 114.142L51.3401 114.867C51.941 115.468 51.941 116.443 51.3401 117.043L45.9015 122.481Z"
-                        fill="#FF4656"
-                        transform="scale(0.3)"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <p className="text-aikyuu-dark font-montserrat text-xl font-medium flex-1">
-                  {criterion.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: "30px",
+          p: 2
+        }
+      }}
+    >
+      <DialogTitle>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Share Analysis
+          </Typography>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Stack>
+      </DialogTitle>
+      
+      <DialogContent>
+        <Stack spacing={3} sx={{ mt: 2 }}>
+          <Typography variant="body1">
+            Enter email address to share the analysis results:
+          </Typography>
+          <TextField
+            fullWidth
+            label="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                height: "56px",
+                borderRadius: "16px"
+              }
+            }}
+          />
+        </Stack>
+      </DialogContent>
+      
+      <DialogActions sx={{ p: 3, pt: 0 }}>
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          sx={{
+            borderRadius: "20px",
+            px: 4,
+            py: 1.5
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleShare}
+          sx={{
+            borderRadius: "20px",
+            px: 4,
+            py: 1.5
+          }}
+        >
+          Share
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
 export default function ViewResult() {
-  const navigate = useNavigate();
-  const [showCriteria, setShowCriteria] = useState(true);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [, forceUpdate] = useState(0);
+  const analysisRef = useRef<HTMLDivElement>(null);
+
+  // Mock data for the analysis results
+  const candidateData = {
+    name: "John Smith",
+    email: "john.smith@email.com",
+    phone: "+1 (555) 123-4567",
+    location: "New York, NY",
+    overallScore: 85,
+    strengths: [
+      "Strong technical background in React and TypeScript",
+      "5+ years of experience in frontend development", 
+      "Leadership experience managing teams of 3-5 developers",
+      "Excellent problem-solving skills"
+    ],
+    weaknesses: [
+      "Limited experience with backend technologies",
+      "No formal certification in cloud platforms",
+      "Could benefit from more mobile development experience"
+    ],
+    experience: [
+      {
+        title: "Senior Frontend Developer",
+        company: "Tech Corp",
+        duration: "2021 - Present",
+        description: "Led frontend development team and architected scalable React applications"
+      },
+      {
+        title: "Frontend Developer",
+        company: "StartupXYZ", 
+        duration: "2019 - 2021",
+        description: "Developed responsive web applications using modern JavaScript frameworks"
+      }
+    ],
+    education: [
+      {
+        degree: "Master of Science in Computer Science",
+        institution: "University of Technology",
+        year: "2019"
+      },
+      {
+        degree: "Bachelor of Science in Software Engineering", 
+        institution: "State University",
+        year: "2017"
+      }
+    ],
+    skills: [
+      { name: "React", level: 9 },
+      { name: "TypeScript", level: 8 },
+      { name: "JavaScript", level: 9 },
+      { name: "HTML/CSS", level: 8 },
+      { name: "Node.js", level: 6 },
+      { name: "Python", level: 7 }
+    ]
+  };
+
+  const handleDownload = async () => {
+    try {
+      // Create a simple PDF-like content for download
+      const content = `
+        CV Analysis Report
+        
+        Candidate: ${candidateData.name}
+        Email: ${candidateData.email}
+        Overall Score: ${candidateData.overallScore}/100
+        
+        Strengths:
+        ${candidateData.strengths.map(s => `• ${s}`).join('\n')}
+        
+        Areas for Improvement:
+        ${candidateData.weaknesses.map(w => `• ${w}`).join('\n')}
+        
+        Experience:
+        ${candidateData.experience.map(exp => `${exp.title} at ${exp.company} (${exp.duration})`).join('\n')}
+      `;
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${candidateData.name.replace(' ', '_')}_Analysis.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar
-        userCredits={50}
-        userName="Alice ahmad"
-        userAvatar="https://images.unsplash.com/photo-1494790108755-2616b60b7751?w=100&h=100&fit=crop&crop=face"
-      />
+    <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
+      {/* Navigation */}
+      <Navbar />
 
-      <div className="max-w-7xl mx-auto px-3 md:px-12">
-        {/* Progress Steps */}
-        <div className="bg-white rounded-[40px] p-8 md:p-14 mb-14">
-          <div className="relative mb-16">
-            {/* Progress Line Background */}
-            <div className="absolute top-6 left-12 right-12 h-1.5 bg-gray-300 rounded-full">
-              <div className="absolute inset-0 bg-aikyuu-primary rounded-full" style={{ width: '100%' }}></div>
-            </div>
+      {/* Main Content */}
+      <Container maxWidth="xl" sx={{ px: { xs: 2, md: 6 }, pb: { xs: 8, md: 16 } }}>
+        {/* Header */}
+        <Box textAlign="center" sx={{ mb: { xs: 8, md: 12 } }}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "3rem", md: "4rem", lg: "4.5rem" },
+              fontWeight: 700,
+              mb: 3,
+              color: "text.primary",
+            }}
+          >
+            Analysis Results
+          </Typography>
+          <Container maxWidth="md">
+            <Typography
+              variant="h5"
+              sx={{
+                color: "text.primary",
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
+                lineHeight: 1.6,
+              }}
+            >
+              Detailed analysis and insights for the candidate
+            </Typography>
+          </Container>
+        </Box>
 
-            {/* Progress Steps */}
-            <div className="relative flex justify-between items-center">
-              {/* Step 1: New Position */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-aikyuu-primary rounded-full flex items-center justify-center mb-4 relative z-10">
-                  <div className="w-6 h-6 bg-aikyuu-dark rounded-full"></div>
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
-                    New Position
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
-                    Create New Position
-                  </p>
-                </div>
-              </div>
+        {/* Analysis Content */}
+        <Box ref={analysisRef}>
+          <Stack spacing={6}>
+            {/* Candidate Overview Card */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Grid container spacing={4} alignItems="center">
+                  <Grid item xs={12} md="auto">
+                    <Avatar
+                      sx={{
+                        width: { xs: 80, md: 120 },
+                        height: { xs: 80, md: 120 },
+                        fontSize: { xs: "2rem", md: "3rem" },
+                        bgcolor: "primary.main",
+                        color: "white"
+                      }}
+                    >
+                      <PersonIcon fontSize="inherit" />
+                    </Avatar>
+                  </Grid>
+                  <Grid item xs={12} md sx={{ flex: 1 }}>
+                    <Stack spacing={2}>
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          fontSize: { xs: "1.875rem", md: "2.5rem" },
+                          fontWeight: 700,
+                          color: "text.primary"
+                        }}
+                      >
+                        {candidateData.name}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {candidateData.email} • {candidateData.phone}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {candidateData.location}
+                      </Typography>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12} md="auto">
+                    <Box textAlign={{ xs: "left", md: "center" }}>
+                      <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
+                        Overall Score
+                      </Typography>
+                      <Chip
+                        label={`${candidateData.overallScore}%`}
+                        sx={{
+                          fontSize: "1.25rem",
+                          fontWeight: 700,
+                          px: 2,
+                          py: 1,
+                          height: "auto",
+                          bgcolor: candidateData.overallScore >= 80 ? 'success.main' : 
+                                   candidateData.overallScore >= 60 ? 'warning.main' : 'error.main',
+                          color: 'white'
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
 
-              {/* Step 2: Upload CV */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-aikyuu-primary rounded-full flex items-center justify-center mb-4 relative z-10">
-                  <div className="w-6 h-6 bg-aikyuu-dark rounded-full"></div>
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
-                    Upload CV
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
-                    Create New Position
-                  </p>
-                </div>
-              </div>
+            {/* Strengths and Weaknesses */}
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={6}>
+                <Card
+                  sx={{
+                    borderRadius: "25px",
+                    p: { xs: 4, md: 5 },
+                    height: "100%",
+                    boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontSize: { xs: "1.5rem", md: "2rem" },
+                        fontWeight: 700,
+                        mb: 3,
+                        color: "success.main"
+                      }}
+                    >
+                      Strengths
+                    </Typography>
+                    <Stack spacing={2}>
+                      {candidateData.strengths.map((strength, index) => (
+                        <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
+                          <StarIcon sx={{ color: "success.main", fontSize: "1.25rem", mt: 0.25 }} />
+                          <Typography variant="body1" sx={{ color: "text.primary" }}>
+                            {strength}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
 
-              {/* Step 3: View Result */}
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-aikyuu-primary rounded-full flex items-center justify-center mb-4 relative z-10">
-                  <div className="w-6 h-6 bg-aikyuu-dark rounded-full"></div>
-                </div>
-                <div className="text-center max-w-60">
-                  <h3 className="text-aikyuu-dark font-montserrat text-2xl md:text-3xl font-bold mb-2">
-                    View Result
-                  </h3>
-                  <p className="text-gray-500 font-montserrat text-lg md:text-xl font-medium">
-                    Create New Position
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              <Grid item xs={12} md={6}>
+                <Card
+                  sx={{
+                    borderRadius: "25px",
+                    p: { xs: 4, md: 5 },
+                    height: "100%",
+                    boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontSize: { xs: "1.5rem", md: "2rem" },
+                        fontWeight: 700,
+                        mb: 3,
+                        color: "warning.main"
+                      }}
+                    >
+                      Areas for Improvement
+                    </Typography>
+                    <Stack spacing={2}>
+                      {candidateData.weaknesses.map((weakness, index) => (
+                        <Stack key={index} direction="row" alignItems="flex-start" spacing={2}>
+                          <Box
+                            sx={{
+                              width: 8,
+                              height: 8,
+                              borderRadius: "50%",
+                              bgcolor: "warning.main",
+                              mt: 1,
+                              flexShrink: 0
+                            }}
+                          />
+                          <Typography variant="body1" sx={{ color: "text.primary" }}>
+                            {weakness}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            </Grid>
 
-        {/* Position and Criteria Section */}
-        <div className="max-w-6xl mx-auto mb-16 space-y-16">
-          {/* Position Title */}
-          <div className="flex items-center gap-16">
-            <span className="text-gray-500 font-montserrat text-3xl font-medium">
-              Position:
-            </span>
-            <span className="text-aikyuu-dark font-montserrat text-3xl font-bold">
-              ui/ux designer
-            </span>
-          </div>
+            {/* Experience Section */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                  <WorkIcon sx={{ fontSize: "2rem", color: "primary.main" }} />
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: { xs: "1.5rem", md: "2rem" },
+                      fontWeight: 700,
+                      color: "text.primary"
+                    }}
+                  >
+                    Experience
+                  </Typography>
+                </Stack>
+                <Stack spacing={3}>
+                  {candidateData.experience.map((exp, index) => (
+                    <Box key={index}>
+                      <Typography variant="h6" sx={{ fontWeight: 700, color: "text.primary", mb: 1 }}>
+                        {exp.title}
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: "primary.main", fontWeight: 600, mb: 1 }}>
+                        {exp.company} • {exp.duration}
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                        {exp.description}
+                      </Typography>
+                      {index < candidateData.experience.length - 1 && (
+                        <Divider sx={{ mt: 3, borderColor: "grey.200" }} />
+                      )}
+                    </Box>
+                  ))}
+                </Stack>
+              </CardContent>
+            </Card>
 
-          {/* Criteria Section */}
-          <div className="space-y-10">
-            {/* Criteria Header */}
-            <div className="flex items-center gap-6">
-              <ToggleSwitch isOn={showCriteria} />
-              <h2 className="text-aikyuu-dark font-montserrat text-2xl font-bold">
-                Criteria
-              </h2>
-            </div>
+            {/* Education Section */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                  <SchoolIcon sx={{ fontSize: "2rem", color: "primary.main" }} />
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: { xs: "1.5rem", md: "2rem" },
+                      fontWeight: 700,
+                      color: "text.primary"
+                    }}
+                  >
+                    Education
+                  </Typography>
+                </Stack>
+                <Stack spacing={3}>
+                  {candidateData.education.map((edu, index) => (
+                    <Box key={index}>
+                      <Typography variant="h6" sx={{ fontWeight: 700, color: "text.primary", mb: 1 }}>
+                        {edu.degree}
+                      </Typography>
+                      <Typography variant="body1" sx={{ color: "primary.main", fontWeight: 600 }}>
+                        {edu.institution} • {edu.year}
+                      </Typography>
+                      {index < candidateData.education.length - 1 && (
+                        <Divider sx={{ mt: 3, borderColor: "grey.200" }} />
+                      )}
+                    </Box>
+                  ))}
+                </Stack>
+              </CardContent>
+            </Card>
 
-            {/* Criteria Content */}
-            {showCriteria && (
-              <div className="bg-white rounded-b-5 p-8 md:p-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                  {/* Left Column */}
-                  <div className="space-y-1">
-                    {[1, 2, 3, 4].map((num) => (
-                      <div key={num} className="bg-white rounded-4 p-6 border border-gray-100">
-                        <div className="flex items-center gap-6">
-                          <span className="text-gray-500 font-montserrat text-lg font-medium">
-                            Criteria-{num}:
-                          </span>
-                          <span className="text-aikyuu-dark font-montserrat text-base font-bold">
-                            Office ipsum you must be desig
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+            {/* Skills Section */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: { xs: "1.5rem", md: "2rem" },
+                    fontWeight: 700,
+                    mb: 4,
+                    color: "text.primary"
+                  }}
+                >
+                  Skills Assessment
+                </Typography>
+                <Grid container spacing={4}>
+                  {candidateData.skills.map((skill, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={index}>
+                      <Box>
+                        <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                          <Typography variant="h6" sx={{ fontWeight: 600, color: "text.primary" }}>
+                            {skill.name}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                            {skill.level}/10
+                          </Typography>
+                        </Stack>
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: 8,
+                            backgroundColor: "grey.200",
+                            borderRadius: "4px",
+                            overflow: "hidden"
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: `${skill.level * 10}%`,
+                              height: "100%",
+                              backgroundColor: skill.level >= 8 ? "success.main" : 
+                                               skill.level >= 6 ? "primary.main" : "warning.main",
+                              transition: "width 0.3s ease"
+                            }}
+                          />
+                        </Box>
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Box>
 
-                  {/* Right Column */}
-                  <div className="space-y-1">
-                    {[5, 6, 7, 8].map((num) => (
-                      <div key={num} className="bg-white rounded-4 p-6 border border-gray-100">
-                        <div className="flex items-center gap-6">
-                          <span className="text-gray-500 font-montserrat text-lg font-medium">
-                            Criteria-{num}:
-                          </span>
-                          <span className="text-aikyuu-dark font-montserrat text-base font-bold">
-                            Office ipsum you must be desig
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Analysis CV Section */}
-          <div className="space-y-10">
-            {/* Analysis Header */}
-            <div className="flex items-center gap-6">
-              <ToggleSwitch isOn={true} />
-              <h2 className="text-aikyuu-dark font-montserrat text-2xl font-bold">
-                Analysis cv
-              </h2>
-            </div>
-
-            {/* Candidates Grid - Only 2 cards as per Figma */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {candidates.slice(0, 2).map((candidate) => (
-                <CandidateCard key={candidate.id} candidate={candidate} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Action Buttons */}
+        <Box 
+          sx={{ 
+            display: "flex", 
+            justifyContent: "center", 
+            gap: 3, 
+            mt: 8,
+            flexDirection: { xs: "column", sm: "row" }
+          }}
+        >
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Download Report
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<ShareIcon />}
+            onClick={() => setIsShareModalOpen(true)}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px", 
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Share Results
+          </Button>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/dashboard"
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem", 
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Back to Dashboard
+          </Button>
+        </Box>
+      </Container>
 
       {/* Footer */}
-      <footer className="bg-gray-800 py-20">
-        <div className="max-w-7xl mx-auto px-12">
-          <div className="flex flex-col items-center gap-8">
+      <Box
+        component="footer"
+        sx={{
+          backgroundColor: "secondary.main",
+          py: { xs: 8, md: 10 },
+        }}
+      >
+        <Container maxWidth="lg">
+          <Stack spacing={4} alignItems="center">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <svg width="52" height="86" className="w-12 h-20 fill-aikyuu-primary" viewBox="0 0 53 87">
-                <path d="M34.7183 86.5C34.2121 86.3976 34.0062 86.0288 33.7227 85.7419C26.4361 78.3638 21.2602 69.1269 18.7447 59.012C18.4475 57.5946 17.8379 56.2633 16.9614 55.1175C16.0848 53.9716 14.9639 53.0408 13.6822 52.3944C10.4153 50.571 6.96267 49.0958 3.77671 47.088C-0.610738 44.3563 -0.587117 42.4372 3.81721 39.6918C7.19217 37.5816 10.9046 36.1269 14.2796 34.0372C15.7291 33.326 16.9471 32.2098 17.7895 30.8206C18.1528 29.9007 18.4252 28.9468 18.6029 27.9727C21.2408 17.8517 26.4229 8.59367 33.6451 1.09937C34.4382 0.279853 34.8432 0.320829 35.6127 1.09937C41.0126 6.54917 46.4317 11.9705 51.8699 17.3634C52.582 18.0463 52.7238 18.4697 51.9509 19.2688C51.9509 19.2688 47.8301 25.5381 45.7005 28.6284C44.3974 30.9007 42.5555 32.8089 40.341 34.1806C36.7906 36.1269 33.014 37.6226 29.5412 39.7533C28.1 40.6343 26.2742 41.5358 26.2539 43.3592C26.2337 45.2646 28.1203 46.166 29.6019 47.0675C32.8689 49.0753 36.4025 50.5505 39.8112 52.3124C42.3643 53.8013 44.4653 55.9696 45.8861 58.5817C47.9111 61.6345 52.0555 67.675 52.0555 67.675C52.7035 68.3579 52.6023 68.6994 52.015 69.2935C46.4733 74.7843 40.9721 80.3126 35.4541 85.8239C35.228 86.0698 34.9445 86.2917 34.7183 86.5Z" fill="#00EBBD" />
-              </svg>
-              <span className="text-aikyuu-primary font-poppins text-4xl md:text-6xl font-bold">
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Box
+                component="svg"
+                sx={{
+                  width: { xs: 40, md: 53 },
+                  height: { xs: 68, md: 86 },
+                  fill: "primary.main",
+                }}
+                viewBox="0 0 53 86"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M34.7183 86C34.2121 85.8976 34.0062 85.5288 33.7227 85.2419C26.4361 77.8638 21.2602 68.6269 18.7447 58.512C18.4475 57.0946 17.8379 55.7633 16.9614 54.6175C16.0848 53.4716 14.9639 52.5408 13.6822 51.8944C10.4153 50.071 6.96267 48.5958 3.77671 46.588C-0.610738 43.8563 -0.587117 41.9372 3.81721 39.1918C7.19217 37.0816 10.9046 35.6269 14.2796 33.5372C15.7291 32.826 16.9471 31.7098 17.7895 30.3206C18.1528 29.4007 18.4252 28.4468 18.6029 27.4727C21.2408 17.3517 26.4229 8.09367 33.6451 0.599371C34.4382 -0.220147 34.8432 -0.179171 35.6127 0.599371C41.0126 6.04917 46.4317 11.4705 51.8699 16.8634C52.582 17.5463 52.7238 17.9697 51.9509 18.7688C51.9509 18.7688 47.8301 25.0381 45.7005 28.1284C44.3974 30.4007 42.5555 32.3089 40.341 33.6806C36.7906 35.6269 33.014 37.1226 29.5412 39.2533C28.1 40.1343 26.2742 41.0358 26.2539 42.8592C26.2337 44.7646 28.1203 45.666 29.6019 46.5675C32.8689 48.5753 36.4025 50.0505 39.8112 51.8124C42.3643 53.3013 44.4653 55.4696 45.8861 58.0817C47.9111 61.1345 52.0555 67.175 52.0555 67.175C52.7035 67.8579 52.6023 68.1994 52.015 68.7935C46.4733 74.2843 40.9721 79.8126 35.4541 85.3239C35.228 85.5698 34.9445 85.7917 34.7183 86Z"
+                />
+              </Box>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 700,
+                  color: "primary.main",
+                  fontSize: { xs: "1.875rem", md: "3rem", lg: "4rem" },
+                }}
+              >
                 Aikyuu
-              </span>
-            </div>
-            <p className="text-gray-300 font-poppins text-lg md:text-xl text-center">
+              </Typography>
+            </Stack>
+
+            {/* Copyright */}
+            <Typography
+              variant="body1"
+              sx={{
+                color: "background.default",
+                fontFamily: "Poppins",
+                textAlign: "center",
+              }}
+            >
               Copyright © Resumate. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+            </Typography>
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* Share Modal */}
+      <ShareModal 
+        isOpen={isShareModalOpen} 
+        onClose={() => setIsShareModalOpen(false)} 
+      />
+    </Box>
   );
 }
