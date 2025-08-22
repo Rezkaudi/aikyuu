@@ -1,5 +1,33 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container, 
+  Card, 
+  CardContent,
+  TextField,
+  Stack,
+  Grid,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  Divider,
+  Avatar
+} from '@mui/material';
+import { 
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  Close as CloseIcon,
+  Add as AddIcon,
+  Work as WorkIcon,
+  Person as PersonIcon,
+  ContentCopy as ContentCopyIcon
+} from '@mui/icons-material';
 import { Navbar } from '../components/ui/navbar';
 import { Position } from '../types';
 import { usePositionsStore } from '@/store/positionsStore';
