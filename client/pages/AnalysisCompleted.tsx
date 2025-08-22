@@ -1,464 +1,628 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Navbar } from '../components/ui/navbar';
-import { usePositionsStore } from '@/store/positionsStore';
-import { useCriteriaStore } from '@/store/criteriaStore';
-import { useAnalysisStore } from '@/store/analysisStore';
+import React, { useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  Container, 
+  Card, 
+  CardContent,
+  Stack,
+  Grid,
+  LinearProgress,
+  Chip,
+  Divider,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField
+} from '@mui/material';
+import { 
+  CheckCircle as CheckCircleIcon,
+  Download as DownloadIcon,
+  Share as ShareIcon,
+  ArrowForward as ArrowForwardIcon,
+  Close as CloseIcon,
+  Star as StarIcon,
+  TrendingUp as TrendingUpIcon
+} from '@mui/icons-material';
+import { Navbar } from '@/components/ui/navbar';
 
-import { useUIStore } from '@/store/uiStore'; import { CVAnalysisResult } from '../types';
+interface ShareModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-const ToggleSwitch: React.FC<{
-  isActive: boolean;
-  label: string;
-  onToggle?: () => void;
-}> = ({ isActive, label, onToggle }) => {
-  return (
-    <div className="flex items-center gap-4">
-      <button
-        onClick={onToggle}
-        className="relative w-16 h-9 bg-gray-300 rounded-full p-1 transition-colors hover:bg-gray-400"
-      >
-        <div className={`w-4 h-7 rounded-full transition-transform ${isActive ? 'bg-aikyuu-primary translate-x-0' : 'bg-gray-500 translate-x-0'
-          }`} />
-      </button>
-      <span className="text-2xl font-montserrat font-bold text-aikyuu-dark">{label}</span>
-    </div>
-  );
-};
+const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
+  const [email, setEmail] = useState('');
 
-const CriteriaCard: React.FC<{
-  positionId: string;
-  isVisible: boolean;
-}> = ({ positionId, isVisible }) => {
-  const { getCriteria } = useCriteriaStore();
-  const criteria = getCriteria(positionId);
-
-  if (!isVisible) return null;
-
-  return (
-    <div className="bg-white rounded-[0_0_20px_20px] p-10">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left Column */}
-        <div className="space-y-1">
-          {criteria.slice(0, Math.ceil(criteria.length / 2)).map((criterion, index) => (
-            <div key={criterion.id} className="bg-white rounded-[15px] h-16 flex items-center px-3">
-              <div className="flex items-center gap-4 w-full">
-                <div className="w-16 h-9 bg-gray-300 rounded-full p-1">
-                  <div className="w-4 h-7 bg-aikyuu-primary rounded-full" />
-                </div>
-                <span className="text-lg text-gray-600 font-montserrat">{criterion.name}:</span>
-                <span className="text-base font-montserrat font-bold text-aikyuu-dark flex-1">
-                  {criterion.description}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Right Column */}
-        <div className="space-y-1">
-          {criteria.slice(Math.ceil(criteria.length / 2)).map((criterion, index) => (
-            <div key={criterion.id} className="bg-white rounded-[15px] h-16 flex items-center px-3">
-              <div className="flex items-center gap-4 w-full">
-                <div className="w-16 h-9 bg-gray-300 rounded-full p-1">
-                  <div className="w-4 h-7 bg-aikyuu-primary rounded-full" />
-                </div>
-                <span className="text-lg text-gray-600 font-montserrat">{criterion.name}:</span>
-                <span className="text-base font-montserrat font-bold text-aikyuu-dark flex-1">
-                  {criterion.description}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AnalysisCard: React.FC<{ result: CVAnalysisResult }> = ({ result }) => {
-  const progressPercentage = result.score;
+  const handleShare = () => {
+    console.log('Sharing analysis to:', email);
+    onClose();
+  };
 
   return (
-    <div className="flex flex-col items-center gap-9">
-      {/* Progress Bar Header */}
-      <div className="w-full max-w-[700px]">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-2xl font-montserrat font-bold text-aikyuu-dark">{result.candidateName}</span>
-          <span className="text-xl font-montserrat font-medium text-aikyuu-dark">Score: {result.score}%</span>
-        </div>
-        <div className="relative w-full h-1.5 bg-gray-200 rounded-full">
-          <div
-            className="absolute top-0 left-0 h-full bg-aikyuu-primary rounded-full transition-all duration-500"
-            style={{ width: `${progressPercentage}%` }}
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      maxWidth="sm"
+      fullWidth
+      PaperProps={{
+        sx: {
+          borderRadius: "30px",
+          p: 2
+        }
+      }}
+    >
+      <DialogTitle>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Typography variant="h4" sx={{ fontWeight: 700, color: "text.primary" }}>
+            Share Analysis
+          </Typography>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Stack>
+      </DialogTitle>
+      
+      <DialogContent>
+        <Stack spacing={3} sx={{ mt: 2 }}>
+          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            Enter email address to share the analysis results:
+          </Typography>
+          <TextField
+            fullWidth
+            label="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                height: "56px",
+                borderRadius: "16px"
+              }
+            }}
           />
-          <div
-            className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 bg-aikyuu-primary rounded-full"
-            style={{ left: `${progressPercentage}%`, transform: 'translate(-50%, -50%)' }}
-          />
-        </div>
-      </div>
-
-      {/* Analysis Header */}
-      <div className="flex items-center gap-4">
-        <ToggleSwitch isActive={true} label="Analysis cv" />
-      </div>
-
-      {/* Analysis Content */}
-      <div className="w-full max-w-[727px] bg-white rounded-[40px] p-8">
-        <div className="space-y-6">
-          {result.criteriaResults.map((criteriaResult) => (
-            <div key={criteriaResult.id} className="flex items-center gap-6">
-              {/* Icon */}
-              <div className="w-8 h-8 flex-shrink-0">
-                {criteriaResult.passed ? (
-                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                    <path d="M14.9559 24.6864C14.7077 24.936 14.3692 25.0754 14.0174 25.0754C13.6656 25.0754 13.327 24.936 13.0788 24.6864L5.58348 17.1898C4.80548 16.4118 4.80548 15.1506 5.58348 14.374L6.52201 13.4355C7.30001 12.6575 8.55977 12.6575 9.33777 13.4355L14.0174 18.1151L26.6622 5.47022C27.4402 4.69222 28.7014 4.69222 29.478 5.47022L30.4165 6.40876C31.1945 7.18676 31.1945 8.44793 30.4165 9.22451L14.9559 24.6864Z" fill="#00EBBD" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                    <path d="M22.9015 15.479L28.3401 20.918C28.941 21.519 28.941 22.493 28.3401 23.093L27.615 23.818C27.0139 24.419 26.0397 24.419 25.4398 23.818L20.0014 18.379L14.5629 23.819C13.9619 24.42 12.9877 24.42 12.3878 23.819L11.6616 23.094C11.0607 22.493 11.0607 21.519 11.6616 20.919L17.1011 15.479L11.6627 10.041C11.0617 9.44 11.0617 8.465 11.6627 7.865L12.3878 7.14C12.9887 6.54 13.9629 6.54 14.5629 7.14L20.0014 12.579L25.4398 7.14C26.0409 6.54 27.0151 6.54 27.615 7.14L28.3401 7.865C28.941 8.467 28.941 9.441 28.3401 10.041L22.9015 15.479Z" fill="#FF4656" />
-                  </svg>
-                )}
-              </div>
-              {/* Text */}
-              <div className="flex-1">
-                <span className="text-xl font-montserrat font-medium text-aikyuu-dark">
-                  {criteriaResult.text}
-                </span>
-                <div className="text-sm text-gray-500 mt-1">
-                  Confidence: {Math.round(criteriaResult.confidence * 100)}%
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Divider lines */}
-        <div className="space-y-6 mt-6">
-          {Array.from({ length: Math.min(8, result.criteriaResults.length) }).map((_, i) => (
-            <div key={i} className="w-full h-px bg-gray-200" />
-          ))}
-        </div>
-      </div>
-    </div>
+        </Stack>
+      </DialogContent>
+      
+      <DialogActions sx={{ p: 3, pt: 0 }}>
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          sx={{
+            borderRadius: "20px",
+            px: 4,
+            py: 1.5
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleShare}
+          sx={{
+            borderRadius: "20px",
+            px: 4,
+            py: 1.5
+          }}
+        >
+          Share
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
 export default function AnalysisCompleted() {
-  const { id } = useParams<{ id: string }>();
-  const { getPosition } = usePositionsStore();
-  const { getAnalysisSession } = useAnalysisStore();
-  const { showCriteria, showAnalysis, setShowCriteria, setShowAnalysis } = useUIStore();
+  const navigate = useNavigate();
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const analysisRef = useRef<HTMLDivElement>(null);
 
-  const position = getPosition(id!);
-  const analysisSession = getAnalysisSession(id!);
-
-  if (!position) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-center">
-            <h1 className="text-3xl font-montserrat font-bold text-aikyuu-dark mb-4">Position Not Found</h1>
-            <p className="text-lg font-montserrat text-gray-600 mb-8">The position you're looking for doesn't exist.</p>
-            <Link
-              to="/use-cases"
-              className="bg-aikyuu-primary text-aikyuu-dark font-montserrat text-lg font-bold px-8 py-4 rounded-[10px] shadow-sm hover:bg-opacity-90 transition-colors"
-            >
-              Back to Use Cases
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!analysisSession) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="text-center">
-            <h1 className="text-3xl font-montserrat font-bold text-aikyuu-dark mb-4">Analysis Not Completed</h1>
-            <p className="text-lg font-montserrat text-gray-600 mb-8">This position hasn't been analyzed yet.</p>
-            <Link
-              to={`/position/${id}`}
-              className="bg-aikyuu-primary text-aikyuu-dark font-montserrat text-lg font-bold px-8 py-4 rounded-[10px] shadow-sm hover:bg-opacity-90 transition-colors"
-            >
-              Go to Position
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const [showExportDropdown, setShowExportDropdown] = useState(false);
-  const exportDropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (exportDropdownRef.current && !exportDropdownRef.current.contains(event.target as Node)) {
-        setShowExportDropdown(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleExportCSV = () => {
-    const csvHeaders = [
-      'Candidate Name',
-      'Overall Score (%)',
-      'Criteria Name',
-      'Criteria Description',
-      'Passed',
-      'Confidence (%)',
-      'Result Text'
-    ];
-
-    const csvRows = [csvHeaders.join(',')];
-
-    analysisSession.results.forEach(result => {
-      result.criteriaResults.forEach(criteria => {
-        const row = [
-          `"${result.candidateName}"`,
-          result.score.toString(),
-          `"${criteria.name || 'N/A'}"`,
-          `"${criteria.description || 'N/A'}"`,
-          criteria.passed ? 'Yes' : 'No',
-          Math.round(criteria.confidence * 100).toString(),
-          `"${criteria.text.replace(/"/g, '""')}"`
-        ];
-        csvRows.push(row.join(','));
-      });
-    });
-
-    const csvContent = csvRows.join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${position.name.replace(/[^a-zA-Z0-9]/g, '_')}_analysis_results.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
-    setShowExportDropdown(false);
+  // Mock analysis data
+  const analysisData = {
+    candidateName: "Sarah Johnson",
+    positionTitle: "Senior Frontend Developer",
+    overallScore: 87,
+    matchPercentage: 92,
+    processedCVs: 1,
+    totalCVs: 1,
+    analysisTime: "2 minutes",
+    completedAt: new Date().toLocaleDateString(),
+    keyFindings: [
+      "Strong technical skills in React and TypeScript",
+      "5+ years of relevant experience", 
+      "Leadership experience with team management",
+      "Excellent educational background"
+    ],
+    recommendations: [
+      "Proceed with technical interview",
+      "Consider for senior-level position",
+      "Schedule team meeting"
+    ],
+    skillsAnalysis: [
+      { skill: "React", score: 95, required: true },
+      { skill: "TypeScript", score: 88, required: true },
+      { skill: "JavaScript", score: 92, required: true },
+      { skill: "Node.js", score: 75, required: false },
+      { skill: "Python", score: 68, required: false }
+    ]
   };
 
-  const handleExportExcel = () => {
-    // Create a comprehensive Excel-style CSV with multiple sections
-    const rows = [];
-
-    // Header section
-    rows.push(['Position Analysis Report']);
-    rows.push(['']);
-    rows.push(['Position Name:', position.name]);
-    rows.push(['Completed Date:', analysisSession.completedDate]);
-    rows.push(['Total Candidates:', analysisSession.totalCandidates.toString()]);
-    rows.push(['Average Score:', `${analysisSession.averageScore}%`]);
-    rows.push(['']);
-    rows.push(['']);
-
-    // Summary section
-    rows.push(['Candidate Summary']);
-    rows.push(['Candidate Name', 'Overall Score (%)', 'Total Criteria', 'Criteria Passed', 'Pass Rate (%)']);
-
-    analysisSession.results.forEach(result => {
-      const passedCount = result.criteriaResults.filter(c => c.passed).length;
-      const totalCount = result.criteriaResults.length;
-      const passRate = Math.round((passedCount / totalCount) * 100);
-
-      rows.push([
-        result.candidateName,
-        result.score.toString(),
-        totalCount.toString(),
-        passedCount.toString(),
-        `${passRate}%`
-      ]);
-    });
-
-    rows.push(['']);
-    rows.push(['']);
-
-    // Detailed results section
-    rows.push(['Detailed Criteria Results']);
-    rows.push(['Candidate Name', 'Overall Score (%)', 'Criteria Name', 'Criteria Description', 'Status', 'Confidence (%)', 'Analysis Result']);
-
-    analysisSession.results.forEach(result => {
-      result.criteriaResults.forEach(criteria => {
-        rows.push([
-          result.candidateName,
-          result.score.toString(),
-          criteria.name || 'N/A',
-          criteria.description || 'N/A',
-          criteria.passed ? 'PASSED' : 'FAILED',
-          `${Math.round(criteria.confidence * 100)}%`,
-          criteria.text
-        ]);
-      });
-    });
-
-    // Convert to CSV format
-    const csvContent = rows.map(row =>
-      row.map(cell => `"${cell.toString().replace(/"/g, '""')}"`).join(',')
-    ).join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${position.name.replace(/[^a-zA-Z0-9]/g, '_')}_detailed_analysis.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
-    setShowExportDropdown(false);
+  const handleDownload = async () => {
+    try {
+      const content = `
+        CV Analysis Report - Completed
+        
+        Position: ${analysisData.positionTitle}
+        Candidate: ${analysisData.candidateName}
+        Overall Score: ${analysisData.overallScore}%
+        Match Percentage: ${analysisData.matchPercentage}%
+        
+        Analysis completed on: ${analysisData.completedAt}
+        Processing time: ${analysisData.analysisTime}
+        
+        Key Findings:
+        ${analysisData.keyFindings.map(finding => `• ${finding}`).join('\n')}
+        
+        Recommendations:
+        ${analysisData.recommendations.map(rec => `• ${rec}`).join('\n')}
+      `;
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Analysis_${analysisData.candidateName.replace(' ', '_')}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed:', error);
+    }
   };
 
-  const handleExportJSON = () => {
-    const exportData = {
-      position: position.name,
-      completedDate: analysisSession.completedDate,
-      totalCandidates: analysisSession.totalCandidates,
-      averageScore: analysisSession.averageScore,
-      results: analysisSession.results.map(result => ({
-        ...result,
-        criteriaResults: result.criteriaResults.map(criteria => ({
-          ...criteria,
-          confidencePercentage: Math.round(criteria.confidence * 100)
-        }))
-      }))
-    };
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return 'success';
+    if (score >= 60) return 'warning';
+    return 'error';
+  };
 
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${position.name.replace(/[^a-zA-Z0-9]/g, '_')}_analysis_results.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-    setShowExportDropdown(false);
+  const getScoreColorValue = (score: number) => {
+    if (score >= 80) return 'success.main';
+    if (score >= 60) return 'warning.main';
+    return 'error.main';
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
+      {/* Navigation */}
       <Navbar />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 pb-16">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-16">
-          <div>
-            <Link
-              to={`/position/${id}`}
-              className="text-aikyuu-primary hover:text-aikyuu-dark transition-colors text-lg font-montserrat mb-2 inline-block"
-            >
-              ← Back to Position
-            </Link>
-            <h1 className="text-3xl font-montserrat font-medium text-aikyuu-dark">
-              {position.name} - Analysis Results
-            </h1>
-            <p className="text-lg font-montserrat text-gray-600 mt-2">
-              Completed on {analysisSession.completedDate} • {analysisSession.totalCandidates} candidates analyzed • Average score: {analysisSession.averageScore}%
-            </p>
-          </div>
-          <div className="relative" ref={exportDropdownRef}>
-            <button
-              onClick={() => setShowExportDropdown(!showExportDropdown)}
-              className="bg-aikyuu-primary text-aikyuu-dark font-montserrat text-lg font-bold px-8 py-4 rounded-[10px] shadow-sm hover:bg-opacity-90 transition-colors flex items-center gap-2"
-            >
-              Export
-              <svg
-                className={`w-4 h-4 transition-transform ${showExportDropdown ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            {showExportDropdown && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-[10px] shadow-lg border border-gray-200 z-50">
-                <div className="py-2">
-                  <button
-                    onClick={handleExportCSV}
-                    className="w-full text-left px-4 py-3 text-lg font-montserrat text-aikyuu-dark hover:bg-gray-50 transition-colors flex items-center gap-3"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Export as CSV
-                  </button>
-                  <button
-                    onClick={handleExportExcel}
-                    className="w-full text-left px-4 py-3 text-lg font-montserrat text-aikyuu-dark hover:bg-gray-50 transition-colors flex items-center gap-3"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18m-9-4v8m-7 0V4a1 1 0 011-1h3m0 0l2 2l2-2M9 3h6l2 2v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" />
-                    </svg>
-                    Export as Excel
-                  </button>
-                  <button
-                    onClick={handleExportJSON}
-                    className="w-full text-left px-4 py-3 text-lg font-montserrat text-aikyuu-dark hover:bg-gray-50 transition-colors flex items-center gap-3"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                    </svg>
-                    Export as JSON
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Criteria Section */}
-        <div className="mb-16">
-          <div className="mb-10">
-            <ToggleSwitch
-              isActive={showCriteria}
-              label="Criteria"
-              onToggle={() => setShowCriteria(!showCriteria)}
+      <Container maxWidth="xl" sx={{ px: { xs: 2, md: 6 }, pb: { xs: 8, md: 16 } }}>
+        {/* Header with Success Animation */}
+        <Box textAlign="center" sx={{ mb: { xs: 8, md: 12 } }}>
+          <Box sx={{ mb: 4 }}>
+            <CheckCircleIcon
+              sx={{
+                fontSize: { xs: "4rem", md: "6rem" },
+                color: "success.main",
+                animation: "pulse 2s infinite"
+              }}
             />
-          </div>
-          <CriteriaCard positionId={id!} isVisible={showCriteria} />
-        </div>
+          </Box>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "3rem", md: "4rem", lg: "4.5rem" },
+              fontWeight: 700,
+              mb: 3,
+              color: "success.main",
+            }}
+          >
+            Analysis Complete!
+          </Typography>
+          <Container maxWidth="md">
+            <Typography
+              variant="h5"
+              sx={{
+                color: "text.primary",
+                fontSize: { xs: "1.25rem", md: "1.5rem" },
+                lineHeight: 1.6,
+              }}
+            >
+              Your CV analysis has been completed successfully.<br />
+              View the detailed results below.
+            </Typography>
+          </Container>
+        </Box>
 
-        {/* Analysis Results Section */}
-        <div className="mb-10">
-          <ToggleSwitch
-            isActive={showAnalysis}
-            label="Analysis cv"
-            onToggle={() => setShowAnalysis(!showAnalysis)}
-          />
-        </div>
+        <Box ref={analysisRef}>
+          <Stack spacing={6}>
+            {/* Analysis Summary Card */}
+            <Card
+              sx={{
+                borderRadius: "30px",
+                p: { xs: 4, md: 8 },
+                background: "linear-gradient(135deg, #00EBBD 0%, #00D4A8 100%)",
+                color: "white",
+                boxShadow: "0 10px 30px rgba(0, 235, 189, 0.3)",
+              }}
+            >
+              <CardContent>
+                <Grid container spacing={4} alignItems="center">
+                  <Grid item xs={12} md={8}>
+                    <Stack spacing={3}>
+                      <Typography
+                        variant="h2"
+                        sx={{
+                          fontSize: { xs: "2rem", md: "3rem" },
+                          fontWeight: 700,
+                          mb: 2
+                        }}
+                      >
+                        {analysisData.candidateName}
+                      </Typography>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontSize: { xs: "1.25rem", md: "1.5rem" },
+                          opacity: 0.9,
+                          mb: 3
+                        }}
+                      >
+                        Applied for: {analysisData.positionTitle}
+                      </Typography>
+                      <Stack direction="row" spacing={4} sx={{ flexWrap: "wrap", gap: 2 }}>
+                        <Box>
+                          <Typography variant="body2" sx={{ opacity: 0.8, mb: 0.5 }}>
+                            Processing Time
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                            {analysisData.analysisTime}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant="body2" sx={{ opacity: 0.8, mb: 0.5 }}>
+                            CVs Processed
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                            {analysisData.processedCVs}/{analysisData.totalCVs}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant="body2" sx={{ opacity: 0.8, mb: 0.5 }}>
+                            Completed
+                          </Typography>
+                          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                            {analysisData.completedAt}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <Box textAlign="center">
+                      <Typography variant="h6" sx={{ mb: 2, opacity: 0.9 }}>
+                        Overall Match
+                      </Typography>
+                      <Box sx={{ position: "relative", display: "inline-flex" }}>
+                        <Box
+                          sx={{
+                            width: { xs: 120, md: 150 },
+                            height: { xs: 120, md: 150 },
+                            borderRadius: "50%",
+                            background: "rgba(255, 255, 255, 0.2)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                          }}
+                        >
+                          <Typography
+                            variant="h2"
+                            sx={{
+                              fontSize: { xs: "2.5rem", md: "3rem" },
+                              fontWeight: 800
+                            }}
+                          >
+                            {analysisData.matchPercentage}%
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
 
-        {showAnalysis && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {analysisSession.results.map((result) => (
-              <AnalysisCard key={result.id} result={result} />
-            ))}
-          </div>
-        )}
-      </div>
+            {/* Key Findings */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                  <StarIcon sx={{ fontSize: "2rem", color: "primary.main" }} />
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: { xs: "1.5rem", md: "2rem" },
+                      fontWeight: 700,
+                      color: "text.primary"
+                    }}
+                  >
+                    Key Findings
+                  </Typography>
+                </Stack>
+                <Grid container spacing={2}>
+                  {analysisData.keyFindings.map((finding, index) => (
+                    <Grid item xs={12} sm={6} key={index}>
+                      <Stack direction="row" alignItems="flex-start" spacing={2}>
+                        <CheckCircleIcon sx={{ color: "success.main", fontSize: "1.5rem", mt: 0.25 }} />
+                        <Typography variant="body1" sx={{ color: "text.primary" }}>
+                          {finding}
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                  ))}
+                </Grid>
+              </CardContent>
+            </Card>
+
+            {/* Skills Analysis */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 4 }}>
+                  <TrendingUpIcon sx={{ fontSize: "2rem", color: "primary.main" }} />
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: { xs: "1.5rem", md: "2rem" },
+                      fontWeight: 700,
+                      color: "text.primary"
+                    }}
+                  >
+                    Skills Analysis
+                  </Typography>
+                </Stack>
+                <Stack spacing={3}>
+                  {analysisData.skillsAnalysis.map((skill, index) => (
+                    <Box key={index}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                          <Typography variant="h6" sx={{ fontWeight: 600, color: "text.primary" }}>
+                            {skill.skill}
+                          </Typography>
+                          {skill.required && (
+                            <Chip
+                              label="Required"
+                              size="small"
+                              sx={{
+                                bgcolor: "error.main",
+                                color: "white",
+                                fontSize: "0.75rem"
+                              }}
+                            />
+                          )}
+                        </Stack>
+                        <Typography variant="body2" sx={{ color: "text.secondary", fontWeight: 600 }}>
+                          {skill.score}%
+                        </Typography>
+                      </Stack>
+                      <LinearProgress
+                        variant="determinate"
+                        value={skill.score}
+                        sx={{
+                          height: 10,
+                          borderRadius: "5px",
+                          backgroundColor: "grey.200",
+                          '& .MuiLinearProgress-bar': {
+                            backgroundColor: getScoreColorValue(skill.score),
+                            borderRadius: "5px",
+                          },
+                        }}
+                      />
+                    </Box>
+                  ))}
+                </Stack>
+              </CardContent>
+            </Card>
+
+            {/* Recommendations */}
+            <Card
+              sx={{
+                borderRadius: "25px",
+                p: { xs: 4, md: 6 },
+                boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <CardContent>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: { xs: "1.5rem", md: "2rem" },
+                    fontWeight: 700,
+                    mb: 4,
+                    color: "text.primary"
+                  }}
+                >
+                  Recommendations
+                </Typography>
+                <Stack spacing={2}>
+                  {analysisData.recommendations.map((rec, index) => (
+                    <Stack key={index} direction="row" alignItems="center" spacing={2}>
+                      <ArrowForwardIcon sx={{ color: "primary.main", fontSize: "1.25rem" }} />
+                      <Typography variant="body1" sx={{ color: "text.primary", fontWeight: 500 }}>
+                        {rec}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Stack>
+              </CardContent>
+            </Card>
+          </Stack>
+        </Box>
+
+        {/* Action Buttons */}
+        <Box 
+          sx={{ 
+            display: "flex", 
+            justifyContent: "center", 
+            gap: 3, 
+            mt: 8,
+            flexDirection: { xs: "column", sm: "row" }
+          }}
+        >
+          <Button
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            onClick={handleDownload}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Download Report
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<ShareIcon />}
+            onClick={() => setIsShareModalOpen(true)}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Share Results
+          </Button>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/view-result"
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            View Details
+          </Button>
+          <Button
+            variant="contained"
+            component={Link}
+            to="/dashboard"
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "25px",
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              minWidth: { xs: "100%", sm: 200 }
+            }}
+          >
+            Back to Dashboard
+          </Button>
+        </Box>
+      </Container>
 
       {/* Footer */}
-      <footer className="bg-aikyuu-dark py-20">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-2">
-            <svg className="w-12 h-20 fill-aikyuu-primary" viewBox="0 0 53 87" xmlns="http://www.w3.org/2000/svg">
-              <path d="M34.7183 86.5C34.2121 86.3976 34.0062 86.0288 33.7227 85.7419C26.4361 78.3638 21.2602 69.1269 18.7447 59.012C18.4475 57.5946 17.8379 56.2633 16.9614 55.1175C16.0848 53.9716 14.9639 53.0408 13.6822 52.3944C10.4153 50.571 6.96267 49.0958 3.77671 47.088C-0.610738 44.3563 -0.587117 42.4372 3.81721 39.6918C7.19217 37.5816 10.9046 36.1269 14.2796 34.0372C15.7291 33.326 16.9471 32.2098 17.7895 30.8206C18.1528 29.9007 18.4252 28.9468 18.6029 27.9727C21.2408 17.8517 26.4229 8.59367 33.6451 1.09937C34.4382 0.279853 34.8432 0.320829 35.6127 1.09937C41.0126 6.54917 46.4317 11.9705 51.8699 17.3634C52.582 18.0463 52.7238 18.4697 51.9509 19.2688C51.9509 19.2688 47.8301 25.5381 45.7005 28.6284C44.3974 30.9007 42.5555 32.8089 40.341 34.1806C36.7906 36.1269 33.014 37.6226 29.5412 39.7533C28.1 40.6343 26.2742 41.5358 26.2539 43.3592C26.2337 45.2646 28.1203 46.166 29.6019 47.0675C32.8689 49.0753 36.4025 50.5505 39.8112 52.3124C42.3643 53.8013 44.4653 55.9696 45.8861 58.5817C47.9111 61.6345 52.0555 67.675 52.0555 67.675C52.7035 68.3579 52.6023 68.6994 52.015 69.2935C46.4733 74.7843 40.9721 80.3126 35.4541 85.8239C35.228 86.0698 34.9445 86.2917 34.7183 86.5Z" />
-            </svg>
-            <h2 className="text-6xl font-poppins font-bold text-aikyuu-primary">Aikyuu</h2>
-          </div>
-          <p className="text-gray-200 font-poppins text-xl">
-            Copyright © Resumate. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+      <Box
+        component="footer"
+        sx={{
+          backgroundColor: "secondary.main",
+          py: { xs: 8, md: 10 },
+        }}
+      >
+        <Container maxWidth="lg">
+          <Stack spacing={4} alignItems="center">
+            {/* Logo */}
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Box
+                component="svg"
+                sx={{
+                  width: { xs: 40, md: 53 },
+                  height: { xs: 68, md: 86 },
+                  fill: "primary.main",
+                }}
+                viewBox="0 0 53 86"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M34.7183 86C34.2121 85.8976 34.0062 85.5288 33.7227 85.2419C26.4361 77.8638 21.2602 68.6269 18.7447 58.512C18.4475 57.0946 17.8379 55.7633 16.9614 54.6175C16.0848 53.4716 14.9639 52.5408 13.6822 51.8944C10.4153 50.071 6.96267 48.5958 3.77671 46.588C-0.610738 43.8563 -0.587117 41.9372 3.81721 39.1918C7.19217 37.0816 10.9046 35.6269 14.2796 33.5372C15.7291 32.826 16.9471 31.7098 17.7895 30.3206C18.1528 29.4007 18.4252 28.4468 18.6029 27.4727C21.2408 17.3517 26.4229 8.09367 33.6451 0.599371C34.4382 -0.220147 34.8432 -0.179171 35.6127 0.599371C41.0126 6.04917 46.4317 11.4705 51.8699 16.8634C52.582 17.5463 52.7238 17.9697 51.9509 18.7688C51.9509 18.7688 47.8301 25.0381 45.7005 28.1284C44.3974 30.4007 42.5555 32.3089 40.341 33.6806C36.7906 35.6269 33.014 37.1226 29.5412 39.2533C28.1 40.1343 26.2742 41.0358 26.2539 42.8592C26.2337 44.7646 28.1203 45.666 29.6019 46.5675C32.8689 48.5753 36.4025 50.0505 39.8112 51.8124C42.3643 53.3013 44.4653 55.4696 45.8861 58.0817C47.9111 61.1345 52.0555 67.175 52.0555 67.175C52.7035 67.8579 52.6023 68.1994 52.015 68.7935C46.4733 74.2843 40.9721 79.8126 35.4541 85.3239C35.228 85.5698 34.9445 85.7917 34.7183 86Z"
+                />
+              </Box>
+              <Typography
+                variant="h2"
+                sx={{
+                  fontFamily: "Poppins",
+                  fontWeight: 700,
+                  color: "primary.main",
+                  fontSize: { xs: "1.875rem", md: "3rem", lg: "4rem" },
+                }}
+              >
+                Aikyuu
+              </Typography>
+            </Stack>
+
+            {/* Copyright */}
+            <Typography
+              variant="body1"
+              sx={{
+                color: "background.default",
+                fontFamily: "Poppins",
+                textAlign: "center",
+              }}
+            >
+              Copyright © Resumate. All rights reserved.
+            </Typography>
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* Share Modal */}
+      <ShareModal 
+        isOpen={isShareModalOpen} 
+        onClose={() => setIsShareModalOpen(false)} 
+      />
+
+      <style>
+        {`
+          @keyframes pulse {
+            0% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.1);
+            }
+            100% {
+              transform: scale(1);
+            }
+          }
+        `}
+      </style>
+    </Box>
   );
 }

@@ -1,6 +1,18 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { 
+  Box, 
+  Typography, 
+  Button, 
+  TextField,
+  FormLabel,
+  Stack
+} from '@mui/material';
+import { 
+  Verified as VerifiedIcon,
+  Phone as PhoneIcon,
+  Favorite as FavoriteIcon
+} from '@mui/icons-material';
 import { AuthLayout } from '@/components/layout/auth-layout';
-import { InputField } from '@/components/ui/input-field';
 import { AikyuuButton } from '@/components/ui/aikyuu-button';
 
 export default function Verification() {
@@ -13,68 +25,172 @@ export default function Verification() {
   };
 
   const rightContent = (
-    <div className="relative w-[516px] h-[509px]">
+    <Box sx={{ position: "relative", width: 516, height: 509 }}>
       {/* Main person image */}
-      <div className="absolute top-8 left-16 w-[372px] h-[470px] rounded-2xl overflow-hidden">
-        <img
+      <Box 
+        sx={{
+          position: "absolute",
+          top: 4,
+          left: 8,
+          width: 372,
+          height: 470,
+          borderRadius: 2,
+          overflow: "hidden"
+        }}
+      >
+        <Box
+          component="img"
           src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face"
           alt="Young person with phone"
-          className="w-full h-full object-cover"
+          sx={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover"
+          }}
         />
-      </div>
+      </Box>
 
       {/* Phone/verification icon top left */}
-      <div className="absolute top-10 left-0 w-[119px] h-[122px] bg-aikyuu-dark rounded-lg flex flex-col items-center justify-center">
-        <div className="text-aikyuu-primary text-4xl mb-2">📱</div>
-        <div className="w-16 h-1 bg-aikyuu-primary mb-2"></div>
-        <div className="w-12 h-1 bg-aikyuu-primary"></div>
-      </div>
+      <Box
+        sx={{
+          position: "absolute",
+          top: 5,
+          left: 0,
+          width: 119,
+          height: 122,
+          backgroundColor: "secondary.main",
+          borderRadius: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <PhoneIcon sx={{ color: "primary.main", fontSize: "2.5rem", mb: 1 }} />
+        <Box sx={{ width: 64, height: 4, bgcolor: "primary.main", mb: 1 }} />
+        <Box sx={{ width: 48, height: 4, bgcolor: "primary.main" }} />
+      </Box>
 
       {/* Check/verification icon */}
-      <div className="absolute top-[285px] left-[183px] w-[139px] h-[139px] bg-white rounded-full shadow-lg flex items-center justify-center">
-        <svg className="w-16 h-16 fill-aikyuu-primary" viewBox="0 0 96 68">
-          <circle cx="48" cy="34" r="30" fill="#00EBBD" />
-          <path d="M38 34l8 8 16-16" stroke="white" strokeWidth="3" fill="none" />
-        </svg>
-      </div>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "285px",
+          left: "183px",
+          width: 139,
+          height: 139,
+          backgroundColor: "background.paper",
+          borderRadius: "50%",
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <Box
+          sx={{
+            width: 96,
+            height: 68,
+            borderRadius: "50%",
+            backgroundColor: "primary.main",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <VerifiedIcon sx={{ color: "white", fontSize: "2rem" }} />
+        </Box>
+      </Box>
 
       {/* Heart/love icon bottom right */}
-      <div className="absolute bottom-8 right-8 w-16 h-16 bg-aikyuu-dark rounded-full flex items-center justify-center">
-        <div className="text-red-500 text-2xl">❤️</div>
-      </div>
-    </div>
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 4,
+          right: 4,
+          width: 64,
+          height: 64,
+          backgroundColor: "secondary.main",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <FavoriteIcon sx={{ color: "error.main", fontSize: "1.5rem" }} />
+      </Box>
+    </Box>
   );
 
   return (
     <AuthLayout rightContent={rightContent}>
-      <div className="max-w-[807px]">
+      <Box sx={{ maxWidth: 807 }}>
         {/* Heading */}
-        <h1 className="text-aikyuu-dark font-montserrat text-[45px] font-bold leading-normal mb-[23px]">
+        <Typography
+          variant="h1"
+          sx={{
+            fontSize: "2.8125rem", // 45px
+            fontWeight: 700,
+            lineHeight: "normal",
+            mb: "23px",
+            color: "text.primary"
+          }}
+        >
           Verification
-        </h1>
+        </Typography>
 
         {/* Subheading */}
-        <p className="text-aikyuu-dark font-montserrat text-2xl font-medium leading-normal mb-[283px]">
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: "1.5rem", // 24px
+            fontWeight: 500,
+            lineHeight: "normal",
+            mb: "283px",
+            color: "text.primary"
+          }}
+        >
           Please, enter your verification code
-        </p>
+        </Typography>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <InputField
-            name="code"
-            type="text"
-            label="Code *"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            className="mb-[316px]"
-          />
+        <Box component="form" onSubmit={handleSubmit}>
+          <Stack spacing={3}>
+            <Box>
+              <FormLabel
+                sx={{
+                  display: "block",
+                  color: "grey.500",
+                  fontSize: "1.125rem",
+                  fontWeight: 500,
+                  mb: 2
+                }}
+              >
+                Code *
+              </FormLabel>
+              <TextField
+                fullWidth
+                name="code"
+                type="text"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                sx={{
+                  mb: "316px",
+                  '& .MuiOutlinedInput-root': {
+                    height: "60px",
+                    borderRadius: "16px"
+                  }
+                }}
+              />
+            </Box>
 
-          {/* Submit Button */}
-          <AikyuuButton type="submit">
-            Confirm
-          </AikyuuButton>
-        </form>
-      </div>
+            {/* Submit Button */}
+            <AikyuuButton type="submit">
+              Confirm
+            </AikyuuButton>
+          </Stack>
+        </Box>
+      </Box>
     </AuthLayout>
   );
 }
