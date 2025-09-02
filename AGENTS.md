@@ -12,7 +12,7 @@ A modern React application for intelligent CV analysis and recruitment managemen
 ## Project Structure
 
 ```
-client/                   # React SPA frontend
+src/                   # React SPA frontend
 ├── pages/                # Route components
 ├── components/           # Reusable components
 │   ├── ui/              # UI component library
@@ -29,14 +29,16 @@ client/                   # React SPA frontend
 ## Key Features
 
 ### SPA Routing System
+
 - Powered by React Router 6
-- Routes defined in `client/App.tsx`
-- Pages located in `client/pages/` directory
+- Routes defined in `src/App.tsx`
+- Pages located in `src/pages/` directory
 
 ### State Management
+
 - **Zustand stores** for different domains:
   - `positionsStore`: Job positions management
-  - `criteriaStore`: Position criteria management  
+  - `criteriaStore`: Position criteria management
   - `resumesStore`: Resume/CV management
   - `analysisStore`: CV analysis results
   - `uiStore`: UI state (modals, dropdowns, etc.)
@@ -44,19 +46,21 @@ client/                   # React SPA frontend
 - **DevTools**: Full Redux DevTools integration
 
 ### Styling System
+
 - **Primary**: TailwindCSS 3 with custom Aikyuu brand colors
 - **Components**: Pre-built Radix UI component library
 - **Fonts**: Montserrat, Poppins, Quicksand from Google Fonts
 - **Utility**: `cn()` function for conditional classes
 
 ### Authentication Flow
+
 - Sign In → Dashboard → Position Management → CV Analysis
 
 ## Development Commands
 
 ```bash
 npm run dev        # Start development server
-npm run build      # Production build  
+npm run build      # Production build
 npm run preview    # Preview production build
 npm test          # Run Vitest tests
 npm run typecheck  # TypeScript validation
@@ -65,18 +69,21 @@ npm run typecheck  # TypeScript validation
 ## Core Workflows
 
 ### 1. Position Management
+
 - Create new job positions
 - Add criteria for evaluation
 - Upload candidate CVs
 - Run AI analysis
 
 ### 2. CV Analysis
+
 - AI-powered resume screening
 - Criteria-based evaluation
 - Detailed scoring and feedback
 - Export results (CSV, Excel, JSON)
 
 ### 3. User Management
+
 - Authentication system
 - Profile management
 - Credit system for CV processing
@@ -95,4 +102,4 @@ npm run typecheck  # TypeScript validation
 
 - **Build**: `npm run build` creates optimized static files
 - **Deploy**: Can be deployed to any static hosting (Netlify, Vercel, etc.)
-- **Environment**: Uses Vite environment variables (VITE_*)
+- **Environment**: Uses Vite environment variables (VITE\_\*)
